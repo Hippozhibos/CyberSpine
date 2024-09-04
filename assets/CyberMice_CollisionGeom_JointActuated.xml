@@ -102,8 +102,9 @@
     
     <worldbody>
         <body name="CyberMice" pos="0 0 0.05">
-            <camera name="side" mode="trackcom" pos="0 -3.5 1" euler="-5 0 0" />
-            <camera name="back" mode="trackcom" pos="-3.5 0 1.3" xyaxes="0 -1 0 1 0 3" />
+            <camera name="side" mode="track" pos="0.008 -0.256 0.180" xyaxes="1.000 0.007 -0.000 -0.003 0.486 0.874"/>
+            <camera name="back" mode="track" pos="-0.162 0.001 0.133" xyaxes="-0.003 -1.000 0.000 0.494 -0.002 0.869"/>
+
             <light name="top" mode="trackcom" exponent="10" cutoff="45" ambient="0 0 0" pos="0 0 5" directional="false" />
             
             <freejoint name="free"/>
@@ -168,7 +169,10 @@
                                         <body name="Head" pos="0.001 0 0.001" gravcomp="0">
                                             <geom name="Head_collision" class="collision_primitive" type="ellipsoid" size="0.0125 0.0075 0.007" density="703.10773841" pos="0.01 0 -0.005" euler="0 0.7 0"/>
                                             
-                                            <camera name="egocentric" fovy="80.0" pos="0.0125 0 0.0025" euler="0 0 0" />
+                                            <camera name="egocentric" fovy="80.0" pos="0.033 0.000 0.052" xyaxes="0.105 -0.995 -0.000 0.595 0.063 0.801"/>
+
+
+
                                             <!-- <joint name="C1_head_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226"/> -->
                                             <joint name="C1_head_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/>
                                             <joint name="C1_head_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063"/>

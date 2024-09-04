@@ -26,8 +26,8 @@ from dm_control.locomotion.arenas import bowl
 from dm_control.locomotion.arenas import corridors as corr_arenas
 from dm_control.locomotion.arenas import floors
 from dm_control.locomotion.arenas import labmaze_textures
-from dm_control.locomotion.arenas import mazes
 from dm_control.locomotion.props import target_sphere
+from dm_control.locomotion.arenas import mazes
 
 # from dm_control.locomotion.tasks import corridors as corr_tasks
 # from dm_control.locomotion.tasks import escape
@@ -39,7 +39,6 @@ from tasks import escape
 from tasks import random_goal_maze
 from tasks import reach
 
-from dm_control.locomotion.walkers import rodent
 from assets import CyberMice
 
 _CONTROL_TIMESTEP = 2e-2
@@ -112,18 +111,15 @@ def rodent_maze_forage(random_state=None):
   """Requires a rodent to find all items in a maze."""
 
   # Build a position-controlled rodent walker.
-  walker = CyberMice.Mice()
-#   walker = rodent.Rat(
-#       observable_options={'egocentric_camera': dict(enabled=True)})
+  walker = CyberMice.Mice(observable_options={'egocentric_camera': dict(enabled=True)})
 
   # Build a maze with rooms and targets.
   wall_textures = labmaze_textures.WallTextures(style='style_01')
-  mazes._TOP_CAMERA_DISTANCE = 1
   arena = mazes.RandomMazeWithTargets(
       x_cells=11,
       y_cells=11,
-      xy_scale=.5,
-      z_height=.3,
+      xy_scale=.3,
+      z_height=.1,
       max_rooms=4,
       room_min_size=4,
       room_max_size=5,
@@ -138,8 +134,8 @@ def rodent_maze_forage(random_state=None):
       maze_arena=arena,
       target_builder=functools.partial(
           target_sphere.TargetSphere,
-          radius=0.05,
-          height_above_ground=.125,
+          radius=0.025,
+          height_above_ground=.05,
           rgb1=(0, 0, 0.4),
           rgb2=(0, 0, 0.7)),
       target_reward_scale=50.,
