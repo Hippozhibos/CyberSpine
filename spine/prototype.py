@@ -1,36 +1,95 @@
+import mujoco as mj
+from mujoco.glfw import glfw
 import numpy as np
-
-import sys
 import os
+from matplotlib import pyplot as plt
+from tqdm import tqdm
 
-# Get the parent directory
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-print(parent_dir)
-# Add the parent directory to sys.path
-sys.path.append(parent_dir)
+import torch
+# print(torch.cuda.is_available())  # This should return True if GPU is enabled.
+# print(torch.cuda.get_device_name(0))  # Should print the name of your GPU.
+import torch.nn as nn
+import torch.optim as optim
+
+model = mj.MjModel.from_xml_path(xml_path) # MuJoCo model
+data = mj.MjData(model) # Mujoco data
+cam = mj.MjvCamera() # Abstruct camera
+opt = mj.MjvOption() # visualization options
+num_actuators = model.nu
+
+# Define Muscle Decoder
+class MuscleDecoder(nn.Module):
+    def __init__(self):
+        super(MuscleDecoder, self).__init__()
+        self.decoder = nn.Sequential(
+            nn.Linear(int(num_actuators/4), int(num_actuators/2)),
+            nn.ReLU(),
+            nn.Linear(int(num_actuators/2), int(num_actuators))
+        )
+
+    def forward(self, x):
+        return self.decoder(x)
+
+# Define Sensor Encoder
+class SensorEncoder(nn.Module):
+    def __init__(self):
+        super(SensorEncoder, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(int(num_actuators), int(num_actuators/2)),
+            nn.ReLU(),
+            nn.Linear(int(num_actuators/2), int(num_actuators/4))
+        )
+
+    def forward(self, x):
+        return self.encoder(x)
+
+# Define KalmanEstimator
+class KalmanEstimator(nn.Module):
+    def __init__(self):
+        super(KalmanEstimator, self).__init__()
+        self.decoder = nn.Sequential(
+            nn.Linear(num_actuators, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 1024),
+            nn.ReLU(),
+            nn.Linear(1024, 1024),
+            nn.ReLU(),
+            nn.Linear(num_actuators*2, num_actuators)
+        )
+
+    def forward(self, x):
+        return self.decoder(x)
+    
+class FullNetwork(nn.Module):
+    def __init__(self):
+        super(FullNetwork, self).__init__()
+        self.part1 = MuscleDecoder()
+        self.part2 = KalmanEstimator()
+        self.part3 = SensorEncoder()
+
+    def forward(self, x):
+        x = self.part1(x)
+        x = self.part2(x)
+        x = self.part3(x)
+        return x
 
 
-from dm_control import suite
-from dm_control import viewer
-from CyberMice.assets.CyberMice import Mice
+# Test the autoencoder networks
+muscle_decoder = MuscleDecoder()
+sensor_encoder = SensorEncoder()
+kalman_estimator = KalmanEstimator()
+full_network = FullNetwork()
 
-# Load the environment
-env = suite.load(domain_name="cartpole", task_name="balance")
-
-# Define a control policy
-def control_policy(time_step):
-    position = time_step.observation['position']
-    velocity = time_step.observation['velocity']
-    action = -1.0 * position - 0.1 * velocity
-    return np.clip(action, -1.0, 1.0)  # Ensure action is within valid range
-
-# Function to run the environment
-def run_environment(env, policy, num_steps=1000):
-    time_step = env.reset()
-    for _ in range(num_steps):
-        action = policy(time_step)
-        time_step = env.step(action)
-        env.physics.render()
-
-# Run the viewer with the policy
-viewer.launch(env, policy=control_policy)
+# Print the architectures
+print("Muscle Decoder:")
+print(muscle_decoder)
+print("\nSensor Encoder:")
+print(sensor_encoder)
+print("\nKalman Estimator:")
+print(kalman_estimator)
+print("\nFullNetwork:")
+print(full_network)
