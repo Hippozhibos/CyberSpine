@@ -78,7 +78,8 @@ def update_policy(trajectory, policy_network, optimizer, checkpoint_dir, best_lo
     for r in trajectory['rewards'][::-1]:
         R = r + gamma * R
         returns.insert(0, R)
-    
+
+    returns = torch.tensor(returns, device=device)
     obs = torch.stack(trajectory['observations']).to(device)
     actions = torch.stack(trajectory['actions']).to(device)
     
@@ -92,27 +93,31 @@ def update_policy(trajectory, policy_network, optimizer, checkpoint_dir, best_lo
     stds = torch.clamp(stds, min=1e-6)  # 避免除以零
     action_distribution = torch.distributions.Normal(means, stds)
     log_probs = action_distribution.log_prob(actions).sum(axis=-1)  # 对每个自由度计算对数概率并相加
-
-    returns = torch.tensor(returns).to(log_probs.device)
+    
+    # returns = torch.tensor(returns).to(log_probs.device)
     loss = -(log_probs * returns).mean()  # 损失是负的期望回报
     
     optimizer.zero_grad()
     loss.backward()
+
+    torch.nn.utils.clip_grad_norm_(policy_network.parameters(), max_norm=1.0)  # 梯度裁剪
+
     optimizer.step()
 
-    # 应用权重剪裁
-    for param in policy_network.parameters():
-        param.data.clamp_(-10, 10)
+    # 权重裁剪应用在更新后，确保权重不会超出范围
+    with torch.no_grad():
+        for param in policy_network.parameters():
+            param.clamp_(-10, 10)
     
      # Check for new best loss and save checkpoint if found
     if loss.item() < best_loss:
         best_loss = loss.item()
-        checkpoint_path = os.path.join(checkpoint_dir, f'checkpoint_episode{episode}_loss{best_loss:.4f}.pth')
+        checkpoint_path = os.path.join(checkpoint_dir, f'checkpoint_episode{episode+1}_loss{best_loss:.4f}.pth')
         torch.save({
             'model_state_dict': policy_network.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': best_loss,
-            'episode': episode
+            'episode': episode+1
         }, checkpoint_path)
         print(f"Checkpoint saved at {checkpoint_path} with loss: {best_loss:.4f}")
 
@@ -137,7 +142,7 @@ def main():
 
     # 初始化策略网络
     policy_network = PolicyNetwork(obs_size, action_size).to(device)
-    optimizer = optim.Adam(policy_network.parameters(), lr=1e-3)
+    optimizer = optim.Adam(policy_network.parameters(), lr=1e-4)
 
     # 定义 checkpoint 保存路径和初始化最优 loss
     checkpoint_dir = 'checkpoints'
@@ -145,13 +150,13 @@ def main():
     best_loss = float('inf')
 
     # 定义批次大小和经验缓冲区
-    batch_size = 5  # 每 5 个 episode 批量更新
+    batch_size = 10  # 每 n 个 episode 批量更新
     # Initialize experience buffer
     buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}
     # Track rewards
     episode_rewards = []
 
-    max_episodes = 10
+    max_episodes = 1000
     # Training loop for multiple episodes
     for episode in range(max_episodes):
         time_step = env.reset()
@@ -165,10 +170,20 @@ def main():
             while not time_step.last():
                 # Sample action from policy
                 mean, std = policy_network(obs)
-                std = torch.clamp(std, min=1e-6)
+                std = torch.clamp(std, min=1e-6, max=1.0)
+
+                if torch.isnan(mean).any() or torch.isnan(std).any():
+                    # print("Detected NaN in mean or std values.")
+                    # print("Mean:", mean)
+                    # print("Std:", std)
+                    # 跳过当前 episode 的训练
+                    print(f"Skipping episode {episode+1} due to NaN values.")
+                    break
+                
                 action_distribution = torch.distributions.Normal(mean, std)
                 action = action_distribution.sample()
                 action = torch.clamp(action, min=0.01, max=0.99)
+                action = action.to(device)
 
                 # Step the environment
                 next_time_step = env.step(action.cpu().numpy())
@@ -199,7 +214,7 @@ def main():
             buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}  # 重置缓冲区
         
         # Print episode reward
-        print(f"Episode {episode + 1}/{max_episodes}, Reward: {episode_reward}")
+        print(f"Episode {episode+1}/{max_episodes}, Reward: {episode_reward}")
     
     # Save the trained policy network
     torch.save(policy_network.state_dict(), 'policy_network.pth')
