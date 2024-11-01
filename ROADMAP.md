@@ -25,3 +25,10 @@
 ### 3. 调整任务和奖励函数设置
 - 设计奖励机制，针对近距离目标设定奖励。
 - 动态调整任务难度，逐步扩展目标距离。
+
+## 每日进度记录
+
+### 2024-11-01
+- 在example.ipynb中编辑，增加observation的信息。
+- 可以load并plot图像（rgb & gray）。
+- 已配置相应传感器，可获得gyro, accelerometer, velocimeter数据。

@@ -170,8 +170,8 @@
                                             <geom name="Head_collision" class="collision_primitive" type="ellipsoid" size="0.0125 0.0075 0.007" density="703.10773841" pos="0.01 0 -0.005" euler="0 0.7 0"/>
                                             
                                             <camera name="egocentric" fovy="80.0" pos="0.033 0.000 0.052" xyaxes="0.105 -0.995 -0.000 0.595 0.063 0.801"/>
-
-
+                                            
+                                            <site name="Head"/>
 
                                             <!-- <joint name="C1_head_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226"/> -->
                                             <joint name="C1_head_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/>
@@ -745,6 +745,9 @@
     </contact>
 
     <sensor>
+        <gyro name="gyro" site="Head" />
+        <accelerometer name="accelerometer" site="Head"/>
+        <velocimeter name="velocimeter" site="Head"/>
         <subtreelinvel name="torso_subtreelinvel" body="CyberMice" />
         <subtreecom name="body_com" body="CyberMice" />
     </sensor>

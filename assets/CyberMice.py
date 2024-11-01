@@ -319,6 +319,33 @@ class MiceObservables(legacy_base.WalkerObservables):
     ] + self._collect_from_attachments('proprioception')
 
   @composer.observable
+  def gyro(self):
+    """Gyro readings."""
+    return observable.MJCFFeature('sensordata',
+                                    self._entity.mjcf_model.sensor.gyro,
+                                    buffer_size=self._buffer_size,
+                                    aggregator='mean')
+  
+  @composer.observable
+  def accelerometer(self):
+        """Accelerometer readings."""
+        return observable.MJCFFeature(
+            'sensordata',
+            self._entity.mjcf_model.sensor.accelerometer,
+            buffer_size=self._buffer_size,
+            aggregator='mean')
+  
+  @composer.observable
+  def velocimeter(self):
+        """Velocimeter readings."""
+        return observable.MJCFFeature(
+            'sensordata',
+            self._entity.mjcf_model.sensor.velocimeter,
+            buffer_size=self._buffer_size,
+            aggregator='mean')
+
+
+  @composer.observable
   def egocentric_camera(self):
     """Observable of the egocentric camera."""
     if not hasattr(self, '_scene_options'):
@@ -333,3 +360,10 @@ class MiceObservables(legacy_base.WalkerObservables):
                                  width=64, height=64,
                                  scene_option=self._scene_options
                                 )
+  
+  @property
+  def vestibular(self):
+        """Return vestibular information."""
+        return [
+            self.gyro, self.accelerometer, self.velocimeter, self.world_zaxis
+        ]
