@@ -32,3 +32,9 @@
 - 在example.ipynb中编辑，增加observation的信息。
 - 可以load并plot图像（rgb & gray）。
 - 已配置相应传感器，可获得gyro, accelerometer, velocimeter数据。
+
+### 2024-11-04
+- 设置了CNN基类
+- 在update_policy中加入了CNN的参数
+- 尝试在main函数中加入CNN
+- 尝试使用torchvision将图像转为灰度图，报错，考虑放弃，尝试原有转换方法，不要在这里过多纠结。
