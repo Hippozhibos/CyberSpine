@@ -70,6 +70,31 @@ class PolicyNetwork(nn.Module):
         log_std = self.fc_log_std(x)
         std = torch.exp(log_std)  # 转化为标准差
         return mean, std
+    
+# 定义图像特征提取网络
+class CNNFeatureExtractor(nn.Module):
+    def __init__(self):
+        super(CNNFeatureExtractor, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5, stride=2)
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
+        self.conv3 = nn.Conv2d(32, 64, kernel_size=5, stride=2)
+        self.flatten = nn.Flatten()
+
+        # 计算最终的特征图大小以更新全连接层参数
+        # 64x64 -> conv1 (30x30) -> conv2 (13x13) -> conv3 (5x5)
+        self.fc = nn.Linear(64 * 5 * 5, 256)  # 假设输入图像经过卷积层后为7x7大小
+        self.relu = nn.ReLU()
+        
+    def forward(self, x):
+        x = self.relu(self.conv1(x))
+        x = self.relu(self.conv2(x))
+        x = self.relu(self.conv3(x))
+        x = self.flatten(x)
+        x = self.fc(x)
+        return x  # 返回低维特征向量
+    
+def scene_transfer():
+    pass
 
 # 策略更新
 def update_policy(trajectory, policy_network, optimizer, checkpoint_dir, best_loss, episode, device, gamma=0.99):

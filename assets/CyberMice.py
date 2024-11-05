@@ -323,7 +323,7 @@ class MiceObservables(legacy_base.WalkerObservables):
     """Gyro readings."""
     return observable.MJCFFeature('sensordata',
                                     self._entity.mjcf_model.sensor.gyro,
-                                    buffer_size=self._buffer_size,
+                                    # buffer_size=self._buffer_size,
                                     aggregator='mean')
   
   @composer.observable
@@ -332,7 +332,7 @@ class MiceObservables(legacy_base.WalkerObservables):
         return observable.MJCFFeature(
             'sensordata',
             self._entity.mjcf_model.sensor.accelerometer,
-            buffer_size=self._buffer_size,
+            # buffer_size=self._buffer_size,
             aggregator='mean')
   
   @composer.observable
@@ -341,7 +341,7 @@ class MiceObservables(legacy_base.WalkerObservables):
         return observable.MJCFFeature(
             'sensordata',
             self._entity.mjcf_model.sensor.velocimeter,
-            buffer_size=self._buffer_size,
+            # buffer_size=self._buffer_size,
             aggregator='mean')
 
 
