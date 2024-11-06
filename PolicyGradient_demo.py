@@ -73,7 +73,7 @@ class PolicyNetwork(nn.Module):
     
 # 定义图像特征提取网络
 class CNNFeatureExtractor(nn.Module):
-    def __init__(self):
+    def __init__(self, feature_dim):
         super(CNNFeatureExtractor, self).__init__()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=16, kernel_size=5, stride=2)
         self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
@@ -81,8 +81,9 @@ class CNNFeatureExtractor(nn.Module):
         self.flatten = nn.Flatten()
 
         # 计算最终的特征图大小以更新全连接层参数
+        # mujoco render的输出为64x64
         # 64x64 -> conv1 (30x30) -> conv2 (13x13) -> conv3 (5x5)
-        self.fc = nn.Linear(64 * 5 * 5, 256)  # 假设输入图像经过卷积层后为7x7大小
+        self.fc = nn.Linear(64 * 5 * 5, feature_dim)
         self.relu = nn.ReLU()
         
     def forward(self, x):
@@ -93,8 +94,13 @@ class CNNFeatureExtractor(nn.Module):
         x = self.fc(x)
         return x  # 返回低维特征向量
     
-def scene_transfer():
-    pass
+def scene_transfer(scene, conv_network, device):
+    gray_scene = np.dot(scene[..., :3], [0.2989, 0.5870, 0.1140])
+    scene_tensor = torch.tensor(gray_scene, dtype=torch.float32, device=device)
+    scene_tensor = scene_tensor.unsqueeze(0).unsqueeze(0)  # [1, 1, 64, 64]
+    features = torch.squeeze(conv_network(scene_tensor))
+
+    return features
 
 # 策略更新
 def update_policy(trajectory, policy_network, optimizer, checkpoint_dir, best_loss, episode, device, gamma=0.99):
@@ -157,17 +163,30 @@ def main():
     # Define env
     env = mice_env.rodent_maze_forage()
     
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # 初始化CNN
+    feature_dim=256
+    conv_network = CNNFeatureExtractor(feature_dim=feature_dim).to(device)
+
     # Access the current positions and velocities
     qpos = env.physics.data.qpos[7:]
     qvel = env.physics.data.qvel[6:]    
-    obs_size = len(qpos)+len(qvel)
+    obs_size = len(qpos)+len(qvel)+feature_dim
     action_size = len(qpos)
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 初始化策略网络
     policy_network = PolicyNetwork(obs_size, action_size).to(device)
-    optimizer = optim.Adam(policy_network.parameters(), lr=1e-4)
+
+    # # Example of loading the saved model
+    # policy_network = PolicyNetwork(obs_size, action_size)
+    # policy_network.load_state_dict(torch.load('policy_network.pth'))
+    # policy_network.eval()  # Set to evaluation mode for testing
+    
+    
+    # 定义联合模型参数优化
+    params = list(policy_network.parameters()) + list(conv_network.parameters())    
+    optimizer = optim.Adam(params, lr=1e-4)
 
     # 定义 checkpoint 保存路径和初始化最优 loss
     checkpoint_dir = 'checkpoints'
@@ -175,20 +194,22 @@ def main():
     best_loss = float('inf')
 
     # 定义批次大小和经验缓冲区
-    batch_size = 10  # 每 n 个 episode 批量更新
+    batch_size = 1  # 每 n 个 episode 批量更新
     # Initialize experience buffer
     buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}
     # Track rewards
     episode_rewards = []
 
-    max_episodes = 1000
+    max_episodes = 5
     # Training loop for multiple episodes
     for episode in range(max_episodes):
         time_step = env.reset()
         qpos = time_step.observation['walker/joints_pos']
         qvel = time_step.observation['walker/joints_vel']
+        scene = time_step.observation['walker/egocentric_camera']
         obs = torch.cat([torch.tensor(qpos, dtype=torch.float32, device=device),
-                         torch.tensor(qvel, dtype=torch.float32, device=device)], dim=0)
+                         torch.tensor(qvel, dtype=torch.float32, device=device),
+                         scene_transfer(scene, conv_network, device)], dim=0)
 
         episode_reward = 0  # Reset episode reward
         with tqdm(total = 1500, desc=f"Episode {episode+1}", leave=False) as pbar:
@@ -224,8 +245,10 @@ def main():
                 # Prepare next observation
                 qpos_next = next_time_step.observation['walker/joints_pos']
                 qvel_next = next_time_step.observation['walker/joints_vel']
+                scene_next = next_time_step.observation['walker/egocentric_camera']
                 obs = torch.cat([torch.tensor(qpos_next, dtype=torch.float32, device=device),
-                                      torch.tensor(qvel_next, dtype=torch.float32, device=device)], dim=0)
+                                torch.tensor(qvel_next, dtype=torch.float32, device=device),
+                                scene_transfer(scene_next, conv_network, device)], dim=0)
                 buffer['next_observations'].append(obs)
                 time_step = next_time_step
                 pbar.update(1)
@@ -249,10 +272,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    # # Example of loading the saved model
-    # policy_network = PolicyNetwork(obs_size, action_size)
-    # policy_network.load_state_dict(torch.load('policy_network.pth'))
-    # policy_network.eval()  # Set to evaluation mode for testing
-
-# ADD code to SAVE THE NN WEIGHTS!!!!!!!!!!!!
