@@ -46,3 +46,7 @@
 ### 2024-11-06
 - 在PG_demo.py中添加图像信息成功
 - 接下来尝试加入vestibule信息
+
+### 2024-11-07
+- 找到前庭信息的构成，gyro, accelerometer, velocimeter, z-axis,可作为一个10维向量输给PG。
+- 可以开始考虑重新设计奖励函数，也即重新设计task,先去掉foraging target. 直接将target与头部的距离设为loss,同时加上姿态惩罚。暂时先不用CNN和视觉信息。

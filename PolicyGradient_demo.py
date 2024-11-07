@@ -194,13 +194,13 @@ def main():
     best_loss = float('inf')
 
     # 定义批次大小和经验缓冲区
-    batch_size = 1  # 每 n 个 episode 批量更新
+    batch_size = 10  # 每 n 个 episode 批量更新
     # Initialize experience buffer
     buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}
     # Track rewards
     episode_rewards = []
 
-    max_episodes = 5
+    max_episodes = 1000
     # Training loop for multiple episodes
     for episode in range(max_episodes):
         time_step = env.reset()
