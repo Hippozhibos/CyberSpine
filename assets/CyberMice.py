@@ -253,6 +253,11 @@ class MiceObservables(legacy_base.WalkerObservables):
   """Observables for the Mice."""
 
   @composer.observable
+  def world_zaxis(self):
+    """The world's z-vector in this Walker's torso frame."""
+    return observable.MJCFFeature('xmat', self._entity.root_body)[6:]
+  
+  @composer.observable
   def joint_positions(self):
     all_joints = self._entity.mjcf_model.find_all('joint')
     return observable.MJCFFeature('qpos', all_joints)

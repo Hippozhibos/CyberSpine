@@ -165,6 +165,10 @@ def main():
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # 手动设置vestibule的维度
+    # vestibule = [self.gyro, self.accelerometer, self.velocimeter, self.world_zaxis]
+    vestibule_dim=12 
+
     # 初始化CNN
     feature_dim=256
     conv_network = CNNFeatureExtractor(feature_dim=feature_dim).to(device)
@@ -172,7 +176,7 @@ def main():
     # Access the current positions and velocities
     qpos = env.physics.data.qpos[7:]
     qvel = env.physics.data.qvel[6:]    
-    obs_size = len(qpos)+len(qvel)+feature_dim
+    obs_size = len(qpos)+len(qvel)+feature_dim+vestibule_dim
     action_size = len(qpos)
 
     # 初始化策略网络
@@ -194,22 +198,30 @@ def main():
     best_loss = float('inf')
 
     # 定义批次大小和经验缓冲区
-    batch_size = 10  # 每 n 个 episode 批量更新
+    batch_size = 1  # 每 n 个 episode 批量更新
     # Initialize experience buffer
     buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}
     # Track rewards
     episode_rewards = []
 
-    max_episodes = 1000
+    max_episodes = 5
     # Training loop for multiple episodes
     for episode in range(max_episodes):
         time_step = env.reset()
         qpos = time_step.observation['walker/joints_pos']
         qvel = time_step.observation['walker/joints_vel']
         scene = time_step.observation['walker/egocentric_camera']
+        gyro = time_step.observation['walker/sensors_gyro']
+        accel = time_step.observation['walker/sensors_accelerometer']
+        veloc = time_step.observation['walker/sensors_velocimeter']
+        world_z = time_step.observation['walker/world_zaxis']
         obs = torch.cat([torch.tensor(qpos, dtype=torch.float32, device=device),
                          torch.tensor(qvel, dtype=torch.float32, device=device),
-                         scene_transfer(scene, conv_network, device)], dim=0)
+                         scene_transfer(scene, conv_network, device),
+                         torch.tensor(gyro, dtype=torch.float32, device=device),
+                         torch.tensor(accel, dtype=torch.float32, device=device),
+                         torch.tensor(veloc, dtype=torch.float32, device=device),
+                         torch.tensor(world_z, dtype=torch.float32, device=device)], dim=0)
 
         episode_reward = 0  # Reset episode reward
         with tqdm(total = 1500, desc=f"Episode {episode+1}", leave=False) as pbar:
@@ -246,9 +258,17 @@ def main():
                 qpos_next = next_time_step.observation['walker/joints_pos']
                 qvel_next = next_time_step.observation['walker/joints_vel']
                 scene_next = next_time_step.observation['walker/egocentric_camera']
+                gyro_next = next_time_step.observation['walker/sensors_gyro']
+                accel_next = next_time_step.observation['walker/sensors_accelerometer']
+                veloc_next = next_time_step.observation['walker/sensors_velocimeter']
                 obs = torch.cat([torch.tensor(qpos_next, dtype=torch.float32, device=device),
                                 torch.tensor(qvel_next, dtype=torch.float32, device=device),
-                                scene_transfer(scene_next, conv_network, device)], dim=0)
+                                scene_transfer(scene_next, conv_network, device),
+                                torch.tensor(gyro_next, dtype=torch.float32, device=device),
+                                torch.tensor(accel_next, dtype=torch.float32, device=device),
+                                torch.tensor(veloc_next, dtype=torch.float32, device=device),
+                                torch.tensor(world_z, dtype=torch.float32, device=device)], dim=0)
+                
                 buffer['next_observations'].append(obs)
                 time_step = next_time_step
                 pbar.update(1)

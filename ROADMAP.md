@@ -50,3 +50,8 @@
 ### 2024-11-07
 - 找到前庭信息的构成，gyro, accelerometer, velocimeter, z-axis,可作为一个10维向量输给PG。
 - 可以开始考虑重新设计奖励函数，也即重新设计task,先去掉foraging target. 直接将target与头部的距离设为loss,同时加上姿态惩罚。暂时先不用CNN和视觉信息。
+
+### 2024-11-08
+- 将前庭信息（12维向量）添加给了PG。关节角/角速度+CNN+前庭 -> PG
+- 训1000个episode看看效果
+- 准备修改task, env, reward，试试看
