@@ -57,8 +57,7 @@
 - 准备修改task, env, reward，试试看
 
 
-
->>>
+>>> 2024-11-11
 ## 步骤调整：
 ## 1. 再次尝试使用Benchmark任务 + RLlib的方案
 - **修改world model算法**
