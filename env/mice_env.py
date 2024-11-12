@@ -29,21 +29,39 @@ from dm_control.locomotion.arenas import labmaze_textures
 from dm_control.locomotion.props import target_sphere
 from dm_control.locomotion.arenas import mazes
 
-# from dm_control.locomotion.tasks import corridors as corr_tasks
-# from dm_control.locomotion.tasks import escape
-# from dm_control.locomotion.tasks import random_goal_maze
-# from dm_control.locomotion.tasks import reach
-
-from tasks import corridors as corr_tasks
-from tasks import escape
-from tasks import random_goal_maze
-from tasks import reach
+from dm_control.locomotion.tasks import corridors as corr_tasks
+from dm_control.locomotion.tasks import escape
+from dm_control.locomotion.tasks import random_goal_maze
+from dm_control.locomotion.tasks import reach
+from dm_control.locomotion.tasks import go_to_target
 
 from assets import CyberMice
 
 _CONTROL_TIMESTEP = 2e-2
 _PHYSICS_TIMESTEP = 1e-3
 
+def rodent_go_to_target(random_state=None):
+  """Requires a rodent to climb out of a bowl-shaped terrain."""
+
+  # Build a position-controlled rodent walker.
+  walker = CyberMice.Mice()
+#   walker = rodent.Rat(
+#       observable_options={'egocentric_camera': dict(enabled=True)})
+
+  # Build a bowl-shaped arena.
+  arena = floors.Floor()
+
+  # Build a task that rewards the agent for being far from the origin.
+  task = go_to_target.GoToTarget(
+      walker=walker,
+      arena=arena,
+      physics_timestep=_PHYSICS_TIMESTEP,
+      control_timestep=_CONTROL_TIMESTEP)
+
+  return composer.Environment(time_limit=20,
+                              task=task,
+                              random_state=random_state,
+                              strip_singleton_obs_buffer_dim=True)
 
 def rodent_escape_bowl(random_state=None):
   """Requires a rodent to climb out of a bowl-shaped terrain."""
