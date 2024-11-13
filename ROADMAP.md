@@ -72,3 +72,8 @@
 - 修改mice_env与熟悉dreamerv3并行；
 - 在mice_env中添加了go_to_target, 下一步修改task；
 - 熟悉dreamerv3，重点熟悉其转换DMC env的代码；
+
+### 2024-11-13
+- go_to_target.py 暂不需要较大修改，其定义的observable里没有egocentric camera信息，但是有target位置，因此可以模拟非视觉引导的环境；
+- 接下来重点是在example.ipynb以及PG_demo.py中修改policy网络的代码，使agent能够按照target信息做任务。
+- 考虑是否要将walker的位置判定标准，从root改为head
