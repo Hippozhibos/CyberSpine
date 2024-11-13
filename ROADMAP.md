@@ -68,3 +68,7 @@
 ## 3. 重新回到dreamerv3的代码，在其基础上，尝试调整网络架构。Env先使用dm_control的任务。
 <<<
 
+### 2024-11-12
+- 修改mice_env与熟悉dreamerv3并行；
+- 在mice_env中添加了go_to_target, 下一步修改task；
+- 熟悉dreamerv3，重点熟悉其转换DMC env的代码；
