@@ -111,6 +111,8 @@ class GoToTarget(composer.Task):
     enabled_observables += self._walker.observables.kinematic_sensors
     enabled_observables += self._walker.observables.dynamic_sensors
     enabled_observables.append(self._walker.observables.sensors_touch)
+    enabled_observables.append(self._walker.observables.world_zaxis)  # 添加 world_z_axis
+
     for obs in enabled_observables:
       obs.enabled = True
 
@@ -186,6 +188,34 @@ class GoToTarget(composer.Task):
       reward = 1.
       if self._moving_target:
         self._reward_step_counter += 1
+
+    # 获取传感器数据
+    gyro = physics.bind(self._walker.gyro).sensordata
+    accel = physics.bind(self._walker.accelerometer).sensordata
+    veloc = physics.bind(self._walker.velocimeter).sensordata
+    world_z = self._walker.observables.world_zaxis(physics)
+
+    # 计算倾斜角度
+    tilt_angle = np.arccos(np.clip(world_z[2], -1.0, 1.0))
+
+    # 定义权重系数
+    alpha = 0.5
+    beta = 0.3
+    gamma = 0.2
+
+    # 计算前庭输入
+    vestibular_input = (
+        alpha * np.linalg.norm(gyro) +
+        beta * np.linalg.norm(accel) +
+        gamma * np.linalg.norm(veloc) +
+        tilt_angle
+    )
+
+
+    # 根据前庭输入施加惩罚
+    penalty = vestibular_input * 1e-2  # 惩罚系数可以根据需要调整
+    reward -= penalty
+
     return reward
 
   def before_step(self, physics, action, random_state):

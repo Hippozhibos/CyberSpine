@@ -33,7 +33,8 @@ from dm_control.locomotion.tasks import corridors as corr_tasks
 from dm_control.locomotion.tasks import escape
 from dm_control.locomotion.tasks import random_goal_maze
 from dm_control.locomotion.tasks import reach
-from dm_control.locomotion.tasks import go_to_target
+# from dm_control.locomotion.tasks import go_to_target
+from tasks import go_to_target
 
 from assets import CyberMice
 

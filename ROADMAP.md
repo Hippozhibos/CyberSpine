@@ -81,5 +81,5 @@
 ### 2024-11-15
 - 已将PG_demo.py中的policy网络改为只接受qpos, qvel, vestibule,target_pos,测试了5个episode，效果不错，reward均为0.
 - 已将walker的位置改为head, 为了配合计算reward;
-- 考虑修改go_to_target.py中的reward,加入对前庭信息的惩罚。
+- 修改go_to_target.py中的reward,加入了模拟前庭信息所需的传感器，前庭信息的计算方式有待修改。
 - 准备阅读dreamerv3的代码，重点是dmc env wrapper的部分，理想情况是能把现有的mice go to task接到dreamerv3框架下。

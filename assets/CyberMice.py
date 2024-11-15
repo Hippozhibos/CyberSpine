@@ -201,6 +201,21 @@ class Mice(legacy_base.Walker):
         return vertebra_order
 
     @composer.cached_property
+    def gyro(self):
+        """Gyro readings."""
+        return self._mjcf_root.find('sensor', 'gyro')
+    
+    @composer.cached_property
+    def accelerometer(self):
+        """Accelerometer readings."""
+        return self._mjcf_root.find('sensor', 'accelerometer')
+    
+    @composer.cached_property
+    def velocimeter(self):
+        """Velocimeter readings."""
+        return self._mjcf_root.find('sensor', 'velocimeter')
+
+    @composer.cached_property
     def egocentric_camera(self):
         """Return the egocentric camera."""
         return self._mjcf_root.find('camera', 'egocentric')
