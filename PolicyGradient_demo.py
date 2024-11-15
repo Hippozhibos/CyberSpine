@@ -1,48 +1,47 @@
 # Prepare env
 import os
-import subprocess
-if subprocess.run('nvidia-smi').returncode:
-  raise RuntimeError(
-      'Cannot communicate with GPU. '
-      'Make sure you are using a GPU Colab runtime. '
-      'Go to the Runtime menu and select Choose runtime type.')
+# import subprocess
+# if subprocess.run('nvidia-smi').returncode:
+#   raise RuntimeError(
+#       'Cannot communicate with GPU. '
+#       'Make sure you are using a GPU Colab runtime. '
+#       'Go to the Runtime menu and select Choose runtime type.')
 
-# Add an ICD config so that glvnd can pick up the Nvidia EGL driver.
-# This is usually installed as part of an Nvidia driver package, but the Colab
-# kernel doesn't install its driver via APT, and as a result the ICD is missing.
-# (https://github.com/NVIDIA/libglvnd/blob/master/src/EGL/icd_enumeration.md)
-NVIDIA_ICD_CONFIG_PATH = '/usr/share/glvnd/egl_vendor.d/10_nvidia.json'
-if not os.path.exists(NVIDIA_ICD_CONFIG_PATH):
-  with open(NVIDIA_ICD_CONFIG_PATH, 'w') as f:
-    f.write("""{
-    "file_format_version" : "1.0.0",
-    "ICD" : {
-        "library_path" : "libEGL_nvidia.so.0"
-    }
-}
-""")
+# # Add an ICD config so that glvnd can pick up the Nvidia EGL driver.
+# # This is usually installed as part of an Nvidia driver package, but the Colab
+# # kernel doesn't install its driver via APT, and as a result the ICD is missing.
+# # (https://github.com/NVIDIA/libglvnd/blob/master/src/EGL/icd_enumeration.md)
+# NVIDIA_ICD_CONFIG_PATH = '/usr/share/glvnd/egl_vendor.d/10_nvidia.json'
+# if not os.path.exists(NVIDIA_ICD_CONFIG_PATH):
+#   with open(NVIDIA_ICD_CONFIG_PATH, 'w') as f:
+#     f.write("""{
+#     "file_format_version" : "1.0.0",
+#     "ICD" : {
+#         "library_path" : "libEGL_nvidia.so.0"
+#     }
+# }
+# """)
 
-# print('Installing dm_control...')
-# !pip install -q dm_control>=1.0.18
+# # print('Installing dm_control...')
+# # !pip install -q dm_control>=1.0.18
 
-# Configure dm_control to use the EGL rendering backend (requires GPU)
-# %env MUJOCO_GL=egl
+# # Configure dm_control to use the EGL rendering backend (requires GPU)
+# # %env MUJOCO_GL=egl
 os.environ['MUJOCO_GL']='egl'
 
-print('Checking that the dm_control installation succeeded...')
-try:
-  from dm_control import suite
-  env = suite.load('cartpole', 'swingup')
-  pixels = env.physics.render()
-except Exception as e:
-  raise e from RuntimeError(
-      'Something went wrong during installation. Check the shell output above '
-      'for more information.\n'
-      'If using a hosted Colab runtime, make sure you enable GPU acceleration '
-      'by going to the Runtime menu and selecting "Choose runtime type".')
-else:
-  del pixels, suite
-
+# print('Checking that the dm_control installation succeeded...')
+# try:
+#   from dm_control import suite
+#   env = suite.load('cartpole', 'swingup')
+#   pixels = env.physics.render()
+# except Exception as e:
+#   raise e from RuntimeError(
+#       'Something went wrong during installation. Check the shell output above '
+#       'for more information.\n'
+#       'If using a hosted Colab runtime, make sure you enable GPU acceleration '
+#       'by going to the Runtime menu and selecting "Choose runtime type".')
+# else:
+#   del pixels, suite
 
 
 # Code RL below 
@@ -161,22 +160,23 @@ def update_policy(trajectory, policy_network, optimizer, checkpoint_dir, best_lo
 
 def main():
     # Define env
-    env = mice_env.rodent_maze_forage()
+    env = mice_env.rodent_go_to_target()
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # 手动设置vestibule的维度
     # vestibule = [self.gyro, self.accelerometer, self.velocimeter, self.world_zaxis]
-    vestibule_dim=12 
+    vestibule_dim=12
+    target_dim=3
 
     # 初始化CNN
-    feature_dim=256
-    conv_network = CNNFeatureExtractor(feature_dim=feature_dim).to(device)
+    # feature_dim=256
+    # conv_network = CNNFeatureExtractor(feature_dim=feature_dim).to(device)
 
     # Access the current positions and velocities
     qpos = env.physics.data.qpos[7:]
     qvel = env.physics.data.qvel[6:]    
-    obs_size = len(qpos)+len(qvel)+feature_dim+vestibule_dim
+    obs_size = len(qpos)+len(qvel)+vestibule_dim+target_dim
     action_size = len(qpos)
 
     # 初始化策略网络
@@ -189,7 +189,8 @@ def main():
     
     
     # 定义联合模型参数优化
-    params = list(policy_network.parameters()) + list(conv_network.parameters())    
+    # params = list(policy_network.parameters()) + list(conv_network.parameters())    
+    params = list(policy_network.parameters())
     optimizer = optim.Adam(params, lr=1e-4)
 
     # 定义 checkpoint 保存路径和初始化最优 loss
@@ -198,30 +199,32 @@ def main():
     best_loss = float('inf')
 
     # 定义批次大小和经验缓冲区
-    batch_size = 10  # 每 n 个 episode 批量更新
+    batch_size = 1  # 每 n 个 episode 批量更新
     # Initialize experience buffer
     buffer = {'observations': [], 'actions': [], 'rewards': [], 'next_observations': []}
     # Track rewards
     episode_rewards = []
 
-    max_episodes = 1000
+    max_episodes = 5
     # Training loop for multiple episodes
     for episode in range(max_episodes):
         time_step = env.reset()
         qpos = time_step.observation['walker/joints_pos']
         qvel = time_step.observation['walker/joints_vel']
-        scene = time_step.observation['walker/egocentric_camera']
+        # scene = time_step.observation['walker/egocentric_camera']
         gyro = time_step.observation['walker/sensors_gyro']
         accel = time_step.observation['walker/sensors_accelerometer']
         veloc = time_step.observation['walker/sensors_velocimeter']
         world_z = time_step.observation['walker/world_zaxis']
+        target_pos = time_step.observation['walker/target']
         obs = torch.cat([torch.tensor(qpos, dtype=torch.float32, device=device),
                          torch.tensor(qvel, dtype=torch.float32, device=device),
-                         scene_transfer(scene, conv_network, device),
+                        #  scene_transfer(scene, conv_network, device),
                          torch.tensor(gyro, dtype=torch.float32, device=device),
                          torch.tensor(accel, dtype=torch.float32, device=device),
                          torch.tensor(veloc, dtype=torch.float32, device=device),
-                         torch.tensor(world_z, dtype=torch.float32, device=device)], dim=0)
+                         torch.tensor(world_z, dtype=torch.float32, device=device),
+                         torch.tensor(target_pos, dtype=torch.float32, device=device)], dim=0)
 
         episode_reward = 0  # Reset episode reward
         with tqdm(total = 1500, desc=f"Episode {episode+1}", leave=False) as pbar:
@@ -257,17 +260,19 @@ def main():
                 # Prepare next observation
                 qpos_next = next_time_step.observation['walker/joints_pos']
                 qvel_next = next_time_step.observation['walker/joints_vel']
-                scene_next = next_time_step.observation['walker/egocentric_camera']
+                # scene_next = next_time_step.observation['walker/egocentric_camera']
                 gyro_next = next_time_step.observation['walker/sensors_gyro']
                 accel_next = next_time_step.observation['walker/sensors_accelerometer']
                 veloc_next = next_time_step.observation['walker/sensors_velocimeter']
+                target_pos_next = next_time_step.observation['walker/target']
                 obs = torch.cat([torch.tensor(qpos_next, dtype=torch.float32, device=device),
                                 torch.tensor(qvel_next, dtype=torch.float32, device=device),
-                                scene_transfer(scene_next, conv_network, device),
+                                # scene_transfer(scene_next, conv_network, device),
                                 torch.tensor(gyro_next, dtype=torch.float32, device=device),
                                 torch.tensor(accel_next, dtype=torch.float32, device=device),
                                 torch.tensor(veloc_next, dtype=torch.float32, device=device),
-                                torch.tensor(world_z, dtype=torch.float32, device=device)], dim=0)
+                                torch.tensor(world_z, dtype=torch.float32, device=device),
+                                torch.tensor(target_pos_next, dtype=torch.float32, device=device)], dim=0)
                 
                 buffer['next_observations'].append(obs)
                 time_step = next_time_step

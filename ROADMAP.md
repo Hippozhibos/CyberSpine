@@ -77,3 +77,9 @@
 - go_to_target.py 暂不需要较大修改，其定义的observable里没有egocentric camera信息，但是有target位置，因此可以模拟非视觉引导的环境；
 - 接下来重点是在example.ipynb以及PG_demo.py中修改policy网络的代码，使agent能够按照target信息做任务。
 - 考虑是否要将walker的位置判定标准，从root改为head
+
+### 2024-11-15
+- 已将PG_demo.py中的policy网络改为只接受qpos, qvel, vestibule,target_pos,测试了5个episode，效果不错，reward均为0.
+- 已将walker的位置改为head, 为了配合计算reward;
+- 考虑修改go_to_target.py中的reward,加入对前庭信息的惩罚。
+- 准备阅读dreamerv3的代码，重点是dmc env wrapper的部分，理想情况是能把现有的mice go to task接到dreamerv3框架下。

@@ -93,7 +93,7 @@ class Mice(legacy_base.Walker):
     @composer.cached_property
     def root_body(self):
         """Return the body."""
-        return self._mjcf_root.find('body', 'CyberMice')
+        return self._mjcf_root.find('body', 'Head')
 
     @composer.cached_property
     def pelvis_body(self):
