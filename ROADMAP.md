@@ -83,3 +83,9 @@
 - 已将walker的位置改为head, 为了配合计算reward;
 - 修改go_to_target.py中的reward,加入了模拟前庭信息所需的传感器，前庭信息的计算方式有待修改。
 - 准备阅读dreamerv3的代码，重点是dmc env wrapper的部分，理想情况是能把现有的mice go to task接到dreamerv3框架下。
+
+
+### 2024-11-16
+- 在dreamerv3的example.py下运行locom_rodent_maze_forage task, world model网络构建成功，但mujoco部分有报错：
+  - UnboundLocalError: cannot access local variable 'env' where it is not associated with a value
+  - dreamerv3的encoder decoder是将walker的所有observation空间都作为了高维向量了，没有进行任何区分选择。
