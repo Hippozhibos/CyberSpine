@@ -89,3 +89,11 @@
 - 在dreamerv3的example.py下运行locom_rodent_maze_forage task, world model网络构建成功，但mujoco部分有报错：
   - UnboundLocalError: cannot access local variable 'env' where it is not associated with a value
   - dreamerv3的encoder decoder是将walker的所有observation空间都作为了高维向量了，没有进行任何区分选择。
+
+### 2024-11-18
+- 11月16日遇到的报错，在可以使用GPU资源后消失，已使用example.py在locom_rodent_maze_forage task任务里训练dreamerv3,从11月17日中午到11月18日晚，目前单卡已运行超过24h，6559152 steps；
+- 细读dreamerv3/agent_v1.py, 尝试在dreamerv3代码基础上修改agent的构成框架。
+
+### 2024-11-19
+- 11月19日上午，dreamerv3训练进行到898万steps，仍在继续。
+- 
