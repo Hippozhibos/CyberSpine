@@ -108,3 +108,4 @@
 - dreamerv3训练默认的1e10是step number, 而不是episode number, 每个episode仍然是1500steps, 所以文章中的1e7的量级应该对应的是1e7个episode.
 - 目前训练的结果是episode的reward可以提高到200左右，但波动仍较强。
 - 应该有什么加速训练的设置，不然目前这个训练速度，1e7个episode要以年为单位才能跑完。
+- 也许应该先eval, 让actor跑一遍，把数据生成出来，再render.尝试run eval_1.py.
