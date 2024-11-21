@@ -96,4 +96,15 @@
 
 ### 2024-11-19
 - 11月19日上午，dreamerv3训练进行到898万steps，仍在继续。
-- 
+- 11月19日晚， 手动停止dreamerv3训练。训练进行到1e7以上，但默认steps数量是1e10，不停止的话，单张GPU要跑很久。
+- Checkpoint 保存在/home/zhangzhibo/logdir/20241117T135935-example，以及复制在/home/zhangzhibo/CheckpointBackup。但想load checkpoint直接定义agent完成任务，还不知道怎么做。
+
+### 2024-11-20
+- 在CyberSpine/example.ipynb中，可以load dreamerv3及其子文件夹，但还没能成功load checkpoint。已询问原作者issue, https://github.com/danijar/dreamerv3/issues/2 , 等待回复。
+
+### 2024-11-21
+- 在CyberSpine/example.ipynb中, 用自己的代码呈现训练的checkpoint失败，这里的问题在于dreamerv3包装后的环境和dm_control的环境并不完全一样，我不能在dm_contrl的代码中直接render dreamerv3的环境。
+- 目前还没找到dreamerv3的render代码，可能要再问一个issue。但估计理想情况还是基于dreamerv3的代码做可视化。
+- dreamerv3训练默认的1e10是step number, 而不是episode number, 每个episode仍然是1500steps, 所以文章中的1e7的量级应该对应的是1e7个episode.
+- 目前训练的结果是episode的reward可以提高到200左右，但波动仍较强。
+- 应该有什么加速训练的设置，不然目前这个训练速度，1e7个episode要以年为单位才能跑完。
