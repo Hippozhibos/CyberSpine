@@ -109,3 +109,8 @@
 - 目前训练的结果是episode的reward可以提高到200左右，但波动仍较强。
 - 应该有什么加速训练的设置，不然目前这个训练速度，1e7个episode要以年为单位才能跑完。
 - 也许应该先eval, 让actor跑一遍，把数据生成出来，再render.尝试run eval_1.py.
+
+### 2024-11-25
+- eval_1.py 频繁报错，很奇怪。
+- dreamerv3训练过程中生成的.npz文件中，可能存在可用于render的rgb数据（取决于生成npz文件时有没有保留rgb信息），但training留下的npz文件都是egocentric camera的，且是用于replay的，视频较小，且不清晰。不确定是不是在eval步骤之后，就可以生成完整的npz文件。
+- eval.py 也会频繁报错，dreamerv3的代码实在是远未工程化，很难用。再想想，应该还有别的办法。
