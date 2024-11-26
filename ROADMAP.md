@@ -125,3 +125,5 @@
       这个感觉不太对，首先必须是在非headless的情况下才能用后者；其次，这个代码要再train或者eval一次才行，但我现在这两者都没法实现。
     - Danijar 提到了两Tensorboard,赶紧看看怎么回事。
 - eval.py 跑起来了！！！！！！！！！！！操他妈的操他妈的操他妈的！！！！！啊啊啊啊啊啊啊啊！
+- tensoboard 使用方法：tensorboard --logdi'~/logdir/20241117T135935-example'
+  - 可以产生可视化图表，但还不知道怎么产生render的视频。
