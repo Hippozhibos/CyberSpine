@@ -114,3 +114,14 @@
 - eval_1.py 频繁报错，很奇怪。
 - dreamerv3训练过程中生成的.npz文件中，可能存在可用于render的rgb数据（取决于生成npz文件时有没有保留rgb信息），但training留下的npz文件都是egocentric camera的，且是用于replay的，视频较小，且不清晰。不确定是不是在eval步骤之后，就可以生成完整的npz文件。
 - eval.py 也会频繁报错，dreamerv3的代码实在是远未工程化，很难用。再想想，应该还有别的办法。
+
+### 2024-11-26
+- 几个可能的render路径：
+    - dmc.py中提到了env.render;
+    - Danijar 提到的 mujoco render的设置：
+        if 'MUJOCO_GL' not in os.environ:
+          os.environ['MUJOCO_GL'] = 'egl'
+          os.environ['MUJOCO_GL'] = 'MUJOCO_PY'
+      这个感觉不太对，首先必须是在非headless的情况下才能用后者；其次，这个代码要再train或者eval一次才行，但我现在这两者都没法实现。
+    - Danijar 提到了两Tensorboard,赶紧看看怎么回事。
+- eval.py 跑起来了！！！！！！！！！！！操他妈的操他妈的操他妈的！！！！！啊啊啊啊啊啊啊啊！
