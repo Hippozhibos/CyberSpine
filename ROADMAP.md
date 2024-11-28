@@ -128,3 +128,20 @@
 - tensoboard 使用方法：tensorboard --logdir='~/logdir/20241117T135935-example'
   - 可以产生可视化图表，但还不知道怎么产生render的视频。
   - 用法还有待进一步摸索
+
+### 2024-11-27
+- tensorboard中可以可视化replay中生成的.npz文件，也即只有在train时保留的图像信息，才有可能被tensorboard呈现出来。
+  - 试试，在obs中增加一个相机位置？
+  - In https://github.com/danijar/dreamerv3/issues/2 , search:
+    “If you env returns an image key as part of the observation dictionary, it will already get rendered and can be viewed in TensorBoard. Does that work for your use case?”
+- 另外，试试修改定义环境的代码，也许是dmc.py，把环境render的结果保留下来。
+- 注意，由于在train时，设置：env = dmc.DMC('locom_rodent_maze_forage', image=False, camera=5)
+    - 导致logdir中的obs没有image，而只有log_image;
+    - 导致在eval时，也必须设置image=False.
+    - tensorboard中展示的画面，正是训练时产生的replay画面
+
+### 2024-11-28
+- 重新开始一轮的train, image设置为true, tensorboard中自动生成了顶部相机的视图，训练时间和上次没有区别。
+    - 有没有可能我在这里中止train,修改camera_id再从当前checkpoint继续训练呢？
+- dreamerv3 默认使用单卡训练，但存在使用单机多卡训练的可能，需要对JAX的设置做一些修改；
+    - 如果使用RLlib,也许可以更简单的改为单机多卡设置，但需要重新摸索在RLlib中启动locom_rodent_maze_forage环境下训练的方法；
