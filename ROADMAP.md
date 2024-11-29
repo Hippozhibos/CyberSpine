@@ -145,3 +145,10 @@
     - 有没有可能我在这里中止train,修改camera_id再从当前checkpoint继续训练呢？
 - dreamerv3 默认使用单卡训练，但存在使用单机多卡训练的可能，需要对JAX的设置做一些修改；
     - 如果使用RLlib,也许可以更简单的改为单机多卡设置，但需要重新摸索在RLlib中启动locom_rodent_maze_forage环境下训练的方法；
+
+### 2024-11-29
+- image = True，图像信息会进入观察空间，并且也是encoder的输入。为结合真实情况，image = True, Camera = 5 比较合理。但这样的话，估计render出来不会好看
+- 新开image = True, camera = 5的训练
+    - 不清楚dmc.py中所对应的camera是在哪里定义的，具体位置是什么。id为5的camera也不是egocentric_camera. 
+    - 也许得尝试其他的camera_id.
+        - 尝试医学院集群
