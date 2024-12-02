@@ -152,3 +152,15 @@
     - 不清楚dmc.py中所对应的camera是在哪里定义的，具体位置是什么。id为5的camera也不是egocentric_camera. 
     - 也许得尝试其他的camera_id.
         - 尝试医学院集群
+
+### 2024-12-02
+- 已在医学院集群上跑了camera= 0 2 4 训练设置；如果不设置camera id,默认是0，不是4.
+  - 所有的mujoco环境都在序号为0的GPU上进行，网络训练则可以放在其他显卡上进行，不知道为什么；
+
+- 后续步骤：
+  - 1. 用rat model在 go_to_target 任务上跑
+  - 2. 改rat_model的观察空间
+  - 3. 改dreamerv3中agent的结构
+  - 4. 改用mice model
+
+  - 先找dreamerv3框架下，在哪里能定义task
