@@ -164,3 +164,7 @@
   - 4. 改用mice model
 
   - 先找dreamerv3框架下，在哪里能定义task
+
+### 2024-12-03
+- !!!!!ssh集群之后，在tmux窗口下运行强化学习程序，不然ssh连接断开，训练也会终止！！！！
+- 不知道为什么，打开集群上的zhangzhibo文件夹，总是会默认打开ostrichrl环境，并且好像会影响dreamerv3程序的运行
