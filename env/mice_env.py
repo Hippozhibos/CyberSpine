@@ -36,7 +36,8 @@ from dm_control.locomotion.tasks import reach
 from dm_control.locomotion.tasks import go_to_target
 # from tasks import go_to_target
 
-from assets import CyberMice
+from dm_control.locomotion.walkers import rodent
+# from assets import CyberMice
 
 _CONTROL_TIMESTEP = 2e-2
 _PHYSICS_TIMESTEP = 1e-3
