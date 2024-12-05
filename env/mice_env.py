@@ -131,7 +131,9 @@ def rodent_maze_forage(random_state=None):
   """Requires a rodent to find all items in a maze."""
 
   # Build a position-controlled rodent walker.
-  walker = CyberMice.Mice(observable_options={'egocentric_camera': dict(enabled=True)})
+#   walker = CyberMice.Mice(observable_options={'egocentric_camera': dict(enabled=True)})
+  walker = rodent.Rat(
+    observable_options={'egocentric_camera': dict(enabled=True)})
 
   # Build a maze with rooms and targets.
   wall_textures = labmaze_textures.WallTextures(style='style_01')
