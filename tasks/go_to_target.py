@@ -103,7 +103,7 @@ class GoToTarget(composer.Task):
         name='target',
         type='sphere',
         pos=(0., 0., 0.),
-        size=(0.01,),
+        size=(0.1,),
         rgba=(0.9, 0.6, 0.6, 1.0))
 
     enabled_observables = []

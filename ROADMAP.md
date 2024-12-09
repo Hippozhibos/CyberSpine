@@ -177,4 +177,5 @@
 - rat model in go-to-target(rat) task: /logdir/20241206T095419-example
 - rat model in maze-forage task: /logdir/20241129T141227-example
 - 修改了mice model颈椎腰椎段关节的限位
-- 尝试修改/CyberSpine/tasks/go_to_target.py， 修改reward function以及obs space以模拟生物实际
+- 修改了/CyberSpine/tasks/go_to_target.py， 修改reward function以及obs space以模拟生物实际
+  - 训练容易报invalid physics state错，看看问题出在哪，可能是可触地body的突然减少，并且非可触地body会直接导致terminal的原因？
