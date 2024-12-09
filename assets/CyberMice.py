@@ -122,8 +122,7 @@ class Mice(legacy_base.Walker):
             self._mjcf_root.find('body', 'LPedal').find_all('geom') +
             self._mjcf_root.find('body', 'RPedal').find_all('geom') +
             self._mjcf_root.find('body', 'LCarpi').find_all('geom') +
-            self._mjcf_root.find('body', 'RCarpi').find_all('geom') +
-            self._mjcf_root.find('body', 'CyberMice').find_all('geom')
+            self._mjcf_root.find('body', 'RCarpi').find_all('geom')
             )
 
     @composer.cached_property

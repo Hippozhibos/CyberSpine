@@ -212,10 +212,17 @@ class GoToTarget(composer.Task):
         tilt_angle
     )
 
+    # # 计算接触惩罚
+    # contact_penalty = 0.0
+    # for contact in physics.data.contact:
+    #     if self._is_disallowed_contact(contact):
+    #         # 如果是禁止接触的几何体之间的接触，增加惩罚
+    #         contact_penalty += 1.0  # 每次禁止接触增加固定惩罚（系数可以调整）
+    # # 将接触惩罚应用到奖励中
+    # reward -= contact_penalty * 1e-2  # 接触惩罚（调节系数）
 
-    # 根据前庭输入施加惩罚
-    penalty = vestibular_input * 1e-2  # 惩罚系数可以根据需要调整
-    reward -= penalty
+    # 将前庭惩罚应用到奖励中
+    reward -= vestibular_input * 1e-2  # 前庭输入惩罚（调节系数）
 
     return reward
 
