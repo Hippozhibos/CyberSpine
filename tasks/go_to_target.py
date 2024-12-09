@@ -103,7 +103,7 @@ class GoToTarget(composer.Task):
         name='target',
         type='sphere',
         pos=(0., 0., 0.),
-        size=(0.1,),
+        size=(0.01,),
         rgba=(0.9, 0.6, 0.6, 1.0))
 
     enabled_observables = []
@@ -112,6 +112,7 @@ class GoToTarget(composer.Task):
     enabled_observables += self._walker.observables.dynamic_sensors
     enabled_observables.append(self._walker.observables.sensors_touch)
     enabled_observables.append(self._walker.observables.world_zaxis)  # 添加 world_z_axis
+    enabled_observables.append(self._walker.observables.egocentric_camera) # 添加 egocentric_camera
 
     for obs in enabled_observables:
       obs.enabled = True

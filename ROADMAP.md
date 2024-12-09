@@ -175,3 +175,6 @@
 ### 2024-12-09
 - mice model in go-to-target(mice) task: /logdir/20241208T163146-example
 - rat model in go-to-target(rat) task: /logdir/20241206T095419-example
+- rat model in maze-forage task: /logdir/20241129T141227-example
+- 修改了mice model颈椎腰椎段关节的限位
+- 尝试修改/CyberSpine/tasks/go_to_target.py， 修改reward function以及obs space以模拟生物实际
