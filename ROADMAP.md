@@ -179,3 +179,5 @@
 - 修改了mice model颈椎腰椎段关节的限位
 - 修改了/CyberSpine/tasks/go_to_target.py， 修改reward function以及obs space以模拟生物实际
   - 训练容易报invalid physics state错，看看问题出在哪，可能是可触地body的突然减少，并且非可触地body会直接导致terminal的原因？
+    - 已基本确定，就是可触地body突然减少导致的；
+    - 下一步：修改可触地body的在reward计算中的规则，不要直接terminal，作为惩罚项试试
