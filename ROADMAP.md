@@ -171,3 +171,7 @@
 
 ### 2024-12-04
 - 
+
+### 2024-12-09
+- mice model in go-to-target(mice) task: /logdir/20241208T163146-example
+- rat model in go-to-target(rat) task: /logdir/20241206T095419-example

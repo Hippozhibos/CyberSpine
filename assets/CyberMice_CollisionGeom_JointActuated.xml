@@ -120,51 +120,51 @@
             <body name="C7" pos="0.01875 0 -0.008" gravcomp="0">
                 <geom name="C7_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
                 
-                <joint name="T_C7_x" class="Cervical_x" pos="0 0 0" axis="1 0 0"/>
-                <!-- <joint name="T_C7_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/> -->
-                <!-- <joint name="T_C7_z" class="Cervical_z" pos="0 0 0" axis="0 0 1"/> -->
+                <joint name="T_C7_x" class="Cervical_x" pos="0 0 0" axis="1 0 0" range="-0.18 0.18"/>
+                <!-- <joint name="T_C7_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/> -->
+                <!-- <joint name="T_C7_z" class="Cervical_z" pos="0 0 0" axis="0 0 1" range="-0.18 0.18"/> -->
 
                 <body name="C6" pos="0.00075 0.00 0.0001" gravcomp="0">
                     <geom name="C6_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
                     
-                    <!-- <joint name="C7_C6_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588" /> -->
-                    <joint name="C7_C6_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/>
-                    <!-- <joint name="C7_C6_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659"/> -->
+                    <!-- <joint name="C7_C6_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588" range="-0.18 0.18"/> -->
+                    <joint name="C7_C6_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/>
+                    <!-- <joint name="C7_C6_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659" range="-0.18 0.18"/> -->
 
                     <body name="C5" pos="0.001 0 0.0004" gravcomp="0">
                         <geom name="C5_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
 
-                        <!-- <joint name="C6_C5_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588"/> -->
-                        <!-- <joint name="C6_C5_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/> -->
-                        <joint name="C6_C5_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659"/>
+                        <!-- <joint name="C6_C5_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588" range="-0.18 0.18"/> -->
+                        <!-- <joint name="C6_C5_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/> -->
+                        <joint name="C6_C5_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659" range="-0.18 0.18"/>
 
                         <body name="C4" pos="0.001 0 0.0003" gravcomp="0">
                             <geom name="C4_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
                             
-                            <joint name="C5_C4_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588"/>
-                            <!-- <joint name="C5_C4_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/> -->
-                            <!-- <joint name="C5_C4_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659"/> -->
+                            <joint name="C5_C4_x" class="Cervical_x" pos="0 0 0" axis="0.9659 0 0.2588" range="-0.18 0.18"/>
+                            <!-- <joint name="C5_C4_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/> -->
+                            <!-- <joint name="C5_C4_z" class="Cervical_z" pos="0 0 0" axis="-0.2588 0 0.9659" range="-0.18 0.18"/> -->
 
                             <body name="C3" pos="0.001 0 0.0005" euler="0 0 0" gravcomp="0">
                                 <geom name="C3_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
 
-                                <!-- <joint name="C4_C3_x" class="Cervical_x" pos="0 0 0" axis="0.9397 0 0.3420"/> -->
-                                <joint name="C4_C3_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/>
-                                <!-- <joint name="C4_C3_z" class="Cervical_z" pos="0 0 0" axis="-0.3420 0 0.9397"/> -->
+                                <!-- <joint name="C4_C3_x" class="Cervical_x" pos="0 0 0" axis="0.9397 0 0.3420" range="-0.18 0.18"/> -->
+                                <joint name="C4_C3_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/>
+                                <!-- <joint name="C4_C3_z" class="Cervical_z" pos="0 0 0" axis="-0.3420 0 0.9397" range="-0.18 0.18"/> -->
 
                                 <body name="C2" pos="0.001 0 0.001" gravcomp="0">
                                     <geom name="C2_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
                                     
-                                    <!-- <joint name="C3_C2_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226"/> -->
-                                    <!-- <joint name="C3_C2_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/> -->
-                                    <joint name="C3_C2_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063"/>
+                                    <!-- <joint name="C3_C2_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226" range="-0.18 0.18"/> -->
+                                    <!-- <joint name="C3_C2_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/> -->
+                                    <joint name="C3_C2_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063" range="-0.18 0.18"/>
 
                                     <body name="C1" pos="0.001 0 0.001" gravcomp="0">
                                         <geom name="C1_collision" class="nonself_collision_primitive" type="sphere" pos="0.001 0 0" size="0.003" density="300.0"/>
 
-                                        <joint name="C2_C1_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226"/>
-                                        <!-- <joint name="C2_C1_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/> -->
-                                        <!-- <joint name="C2_C1_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063"/> -->
+                                        <joint name="C2_C1_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226" range="-0.18 0.18"/>
+                                        <!-- <joint name="C2_C1_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/> -->
+                                        <!-- <joint name="C2_C1_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063" range="-0.18 0.18"/> -->
 
                                         <body name="Head" pos="0.001 0 0.001" gravcomp="0">
                                             <geom name="Head_collision" class="collision_primitive" type="ellipsoid" size="0.0125 0.0075 0.007" density="703.10773841" pos="0.01 0 -0.005" euler="0 0.7 0"/>
@@ -173,9 +173,9 @@
                                             
                                             <site name="Head"/>
 
-                                            <!-- <joint name="C1_head_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226"/> -->
-                                            <joint name="C1_head_y" class="Cervical_y" pos="0 0 0" axis="0 1 0"/>
-                                            <joint name="C1_head_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063"/>
+                                            <!-- <joint name="C1_head_x" class="Cervical_x" pos="0 0 0" axis="0.9063 0 0.4226" range="-0.18 0.18"/> -->
+                                            <joint name="C1_head_y" class="Cervical_y" pos="0 0 0" axis="0 1 0" range="-0.18 0.18"/>
+                                            <joint name="C1_head_z" class="Cervical_z" pos="0 0 0" axis="-0.4226 0 0.9063" range="-0.18 0.18"/>
                                         
                                         </body>
                                     </body>
@@ -205,7 +205,7 @@
                         <geom name="RUlna_collision" class="collision_primitive" size="0.001 0.006" pos="-0.0008 0 -0.0045" euler="0.1 0 0"/>
                         
                         <body name="RRadius" pos="0 0 -0.0075" gravcomp="0">
-                            <joint name="RRadius_rotation" pos="0.0007 -0.0003 0" axis="-0.1 -0.075 1" range="-1.5707963267948966 1.5707963267948966" group="0" />
+                            <!-- <joint name="RRadius_rotation" pos="0.0007 -0.0003 0" axis="-0.1 -0.075 1" range="-1.5707963267948966 1.5707963267948966" group="0" /> -->
                             <geom name="RRadius_collision" class="collision_primitive" size="0.001 0.005" pos="0.0005 0 0.002" euler="0.1 0 0"/>
                             
                             <body name="RCarpi" pos="0 0 -0.0035" gravcomp="0">
@@ -247,7 +247,7 @@
                         <geom name="LUlna_collision" class="collision_primitive" size="0.001 0.006" pos="-0.0008 0 -0.0045" euler="-0.1 0 0"/>
                     
                         <body name="LRadius" pos="0 0 -0.0075" gravcomp="0">
-                            <joint name="LRadius_rotation" pos="0.0007 0.0003 0" axis="0.1 -0.075 -1" range="-1.5707963267948966 1.5707963267948966" group="1" />
+                            <!-- <joint name="LRadius_rotation" pos="0.0007 0.0003 0" axis="0.1 -0.075 -1" range="-1.5707963267948966 1.5707963267948966" group="1" /> -->
                             <geom name="LRadius_collision" class="collision_primitive" size="0.001 0.005" pos="0.0005 0 0.002" euler="-0.1 0 0"/>
                         
                             <body name="LCarpi" pos="0 0 -0.0035" gravcomp="0">
@@ -272,53 +272,53 @@
             <body name="L1" pos="0.0 0.00 0.00" gravcomp="0">
                 <geom name="L1_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.002 0 0"/>
                 
-                <joint name="T_L1_x" class="Lumbar_x" pos="0 0 0.001" axis="0.9848 0 0.1736"/>
-                <!-- <joint name="T_L1_y" class="Lumbar_y" pos="0 0 0.001" axis="0 1 0"/> -->
-                <!-- <joint name="T_L1_z" class="Lumbar_z" pos="0 0 0.001" axis="-0.1736 0 0.9848"/> -->
+                <joint name="T_L1_x" class="Lumbar_x" pos="0 0 0.001" axis="0.9848 0 0.1736" range="-0.25 0.25"/>
+                <!-- <joint name="T_L1_y" class="Lumbar_y" pos="0 0 0.001" axis="0 1 0" range="-0.25 0.25"/> -->
+                <!-- <joint name="T_L1_z" class="Lumbar_z" pos="0 0 0.001" axis="-0.1736 0 0.9848" range="-0.25 0.25"/> -->
                 
                 <body name="L2" pos="-0.004 0 -0.00015" gravcomp="0">
                     <geom name="L2_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.001 0 -0.00075"/>
                     
-                    <!-- <joint name="L1_L2_x" class="Lumbar_x" pos="0 0 0" axis="0.9848 0 0.1736"/> -->
-                    <joint name="L1_L2_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0"/>
-                    <!-- <joint name="L1_L2_z" class="Lumbar_z" pos="0 0 0" axis="-0.1736 0 0.9848"/> -->
+                    <!-- <joint name="L1_L2_x" class="Lumbar_x" pos="0 0 0" axis="0.9848 0 0.1736" range="-0.25 0.25"/> -->
+                    <joint name="L1_L2_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0" range="-0.25 0.25"/>
+                    <!-- <joint name="L1_L2_z" class="Lumbar_z" pos="0 0 0" axis="-0.1736 0 0.9848" range="-0.25 0.25"/> -->
                     
                     <body name="L3" pos="-0.00225 0 -0.00075" euler="0 0 0" gravcomp="0">
                         <geom name="L3_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.001 0 -0.0005"/>
                         
-                        <!-- <joint name="L2_L3_x" class="Lumbar_x" pos="0 0 0" axis="0.9848 0 0.1736"/> -->
-                        <!-- <joint name="L2_L3_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0"/> -->
-                        <joint name="L2_L3_z" class="Lumbar_z" pos="0 0 0" axis="-0.1736 0 0.9848"/>
+                        <!-- <joint name="L2_L3_x" class="Lumbar_x" pos="0 0 0" axis="0.9848 0 0.1736" range="-0.25 0.25"/> -->
+                        <!-- <joint name="L2_L3_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0" range="-0.25 0.25"/> -->
+                        <joint name="L2_L3_z" class="Lumbar_z" pos="0 0 0" axis="-0.1736 0 0.9848" range="-0.25 0.25"/>
                         
                         <body name="L4" pos="-0.00275 0 -0.0006" euler="0 0 0" gravcomp="0">
                             <geom name="L4_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.001 0 -0.00025"/>
                             
-                            <joint name="L3_L4_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0"/>
-                            <!-- <joint name="L3_L4_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0"/> -->
-                            <!-- <joint name="L3_L4_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1"/> -->
+                            <joint name="L3_L4_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0" range="-0.25 0.25"/>
+                            <!-- <joint name="L3_L4_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0" range="-0.25 0.25"/> -->
+                            <!-- <joint name="L3_L4_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1" range="-0.25 0.25"/> -->
 
                             <body name="L5" pos="-0.0035 0 -0.000" gravcomp="0">
                                 <geom name="L5_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.001 0 0"/>
                                 
-                                <!-- <joint name="L4_L5_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0"/> -->
-                                <joint name="L4_L5_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0"/>
-                                <!-- <joint name="L4_L5_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1"/> -->
+                                <!-- <joint name="L4_L5_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0" range="-0.25 0.25"/> -->
+                                <joint name="L4_L5_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0" range="-0.25 0.25"/>
+                                <!-- <joint name="L4_L5_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1" range="-0.25 0.25"/> -->
                                 
                                 <body name="L6" pos="-0.003 0 -0.000" gravcomp="0">
                                     <geom name="L6_collision" class="nonself_collision_primitive" type="sphere" size="0.0025" pos="-0.001 0 0.00025"/>
                                    
-                                    <!-- <joint name="L5_L6_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0"/> -->
-                                    <!-- <joint name="L5_L6_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0"/> -->
-                                    <joint name="L5_L6_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1"/>
+                                    <!-- <joint name="L5_L6_x" class="Lumbar_x" pos="0 0 0" axis="1 0 0" range="-0.25 0.25"/> -->
+                                    <!-- <joint name="L5_L6_y" class="Lumbar_y" pos="0 0 0" axis="0 1 0" range="-0.25 0.25"/> -->
+                                    <joint name="L5_L6_z" class="Lumbar_z" pos="0 0 0" axis="0 0 1" range="-0.25 0.25"/>
 
                                     <body name="Pelvis" pos="0.0025 0.00 -0.00175" euler="0 0 0" gravcomp="0">                                     
                                         <geom name="RPelvis_collision" class="nonself_collision_primitive" size="0.0035 0.0075 0" density="1548.57736929" pos="-0.009 -0.003 0.001" euler="0 1.57 0"/>
                                         <geom name="LPelvis_collision" class="nonself_collision_primitive" size="0.0035 0.0075 0" density="1548.57736929" pos="-0.009 0.003 0.001" euler="0 1.57 0"/>
                                         <geom name="collision_pelvis_gut" class="nonself_collision_primitive" type="ellipsoid" size="0.006 0.006 0.005" density="1548.57736929" pos="-0.005 0 -0.0065" euler="0 0.2 0"/>
 
-                                        <joint name="L6_S1_x" class="Lumbar_x" pos="-0.005 0 0.002" axis="1 0 0"/>
-                                        <joint name="L6_S1_y" class="Lumbar_y" pos="-0.005 0 0.002" axis="0 1 0"/>
-                                        <joint name="L6_S1_z" class="Lumbar_z" pos="-0.005 0 0.002" axis="0 0 1"/>
+                                        <joint name="L6_S1_x" class="Lumbar_x" pos="-0.005 0 0.002" axis="1 0 0" range="-0.25 0.25"/>
+                                        <joint name="L6_S1_y" class="Lumbar_y" pos="-0.005 0 0.002" axis="0 1 0" range="-0.25 0.25"/>
+                                        <joint name="L6_S1_z" class="Lumbar_z" pos="-0.005 0 0.002" axis="0 0 1" range="-0.25 0.25"/>
                                 
                                         <body name="RFemur" pos="-0.013 -0.0028 0.002" gravcomp="0">
                                             <joint name="RHip_rotation" pos="0 0 0" axis="0 0 1" range="-0.5 0.5" group="3" />
@@ -636,7 +636,7 @@
         <motor name="RShoulder_rotation" gear="1" joint="RShoulder_rotation" ctrllimited="true" ctrlrange="-1 1"/>
         <motor name="RElbow_flexion" gear="1" joint="RElbow_flexion" ctrllimited="true" ctrlrange="-1 1"/>
 
-        <motor name="RRadius_rotation" gear="1" joint="RRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/>
+        <!-- <motor name="RRadius_rotation" gear="1" joint="RRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/> -->
         <motor name="RWrist_adduction" gear="1" joint="RWrist_adduction" ctrllimited="true" ctrlrange="-1 1"/>
         <motor name="RWrist_flexion" gear="1" joint="RWrist_flexion" ctrllimited="true" ctrlrange="-1 1"/>
 
@@ -653,7 +653,7 @@
         <motor name="LShoulder_rotation" gear="1" joint="LShoulder_rotation" ctrllimited="true" ctrlrange="-1 1"/>
         <motor name="LElbow_flexion" gear="1" joint="LElbow_flexion" ctrllimited="true" ctrlrange="-1 1"/>
 
-        <motor name="LRadius_rotation" gear="1" joint="LRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/>
+        <!-- <motor name="LRadius_rotation" gear="1" joint="LRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/> -->
         <motor name="LWrist_adduction" gear="1" joint="LWrist_adduction" ctrllimited="true" ctrlrange="-1 1"/>
         <motor name="LWrist_flexion" gear="1" joint="LWrist_flexion" ctrllimited="true" ctrlrange="-1 1"/>
 
