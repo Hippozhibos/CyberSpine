@@ -184,4 +184,11 @@
 
 ### 2024-12-10
 - 可触地body做惩罚项而不是terminal会导致报错，但目前报错原因不稳定，测试中；
+    - 大概在训练到2h左右，会报错：mujoco.FatalError: Offscreen framebuffer is not complete, error 0x8cdd
+      -好像是和mujoco渲染有关的，尚不清楚什么原因。
+    - 关掉invalid contact break, 打开invalid contact punishment, 会报错：Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+    - 打开invalid contact break, 打开invalid contact punishment, 运行到50万步左右,报错：mujoco.FatalError: Offscreen framebuffer is not complete, error 0x8cdd
+
+    - 下一步：测试：打开invalid contact break，关掉invalid contact punishment（dm_control原有设置）
+
 - 下一步是不是可以开始尝试修改agent结构的工作了？
