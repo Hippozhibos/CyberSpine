@@ -196,3 +196,4 @@
 ### 2024-12-11
 - mujoco.FatalError DEBUG:
   - 测试：mice model + dm_control.go_to_target.py,
+  - 测试：rat model + cyberspine.go_to_target.py,
