@@ -189,11 +189,35 @@
     - 关掉invalid contact break, 打开invalid contact punishment, 会报错：Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
     - 打开invalid contact break, 打开invalid contact punishment, 运行到50万步左右,报错：mujoco.FatalError: Offscreen framebuffer is not complete, error 0x8cdd
     - 打开invalid contact break，关掉invalid contact punishment（dm_control原有设置）,运行到50万步左右,报错：mujoco.FatalError: Offscreen framebuffer is not complete, error 0x8cdd
-    - 也许是mice model的原因？尝试切换 go_to_target.py / walker
+      - 也许是mice model的原因？尝试切换 go_to_target.py / walker
+      - 会不会是设备的原因？尝试切换设备
 
 - 下一步是不是可以开始尝试修改agent结构的工作了？
 
 ### 2024-12-11
 - mujoco.FatalError DEBUG:
-  - 测试：mice model + dm_control.go_to_target.py,
-  - 测试：rat model + cyberspine.go_to_target.py,
+  - 测试：mice model + dm_control.go_to_target.py, 33万步左右，报错：RuntimeError: Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+
+  - 测试：rat model + cyberspine.go_to_target.py, 报错：RuntimeError: 'Rat' object has no attribute 'gyro'
+
+- 尝试切换设备, 在冰箱间工作站:
+  - 测试：mice model + cyberspine.go_to_target.py, disallowed contact -> [break, no punishment]，报错：RuntimeError: Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+    - 可触地body的突然减少导致的？
+    - 与医学院设备的报错不同
+    - 再测一次：报错：RuntimeError: Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+
+  - 测试：mice model + cyberspine.go_to_target.py, disallowed contact -> [break, punishment]，报错：RuntimeError: Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+
+  - 测试：mice model + cyberspine.go_to_target.py, disallowed contact -> [no break, punishment]，报错：RuntimeError: Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+
+  - 测试：mice model + dm_control.go_to_target.py，报错：Physics state is invalid. Warning(s) raised: mjWARN_BADQACC
+
+  - 测试：rat model + dm_control.go_to_target.py，运行至438w步，暂未报错。
+
+  - 看起来是mice model的问题会导致上述报错？
+
+### 2024-12-12
+- 检查mice model和rat model的xml文件设置，重点：
+  - body的拓扑关系；
+  - 关节的运动范围；
+  - 关节电机的扭矩设置；
