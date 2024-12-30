@@ -46,11 +46,11 @@ def rodent_go_to_target(random_state=None):
   """Requires a rodent to climb out of a bowl-shaped terrain."""
 
   # Build a position-controlled rodent walker.
-  # walker = CyberMice.Mice()
-  walker = rodent.Rat(
-      observable_options={'egocentric_camera': dict(enabled=True)})
+  walker = CyberMice.Mice()
+#   walker = rodent.Rat(
+#       observable_options={'egocentric_camera': dict(enabled=True)})
 
-  # Build a bowl-shaped arena.
+  # Build a simple arena.
   arena = floors.Floor()
 
   # Build a task that rewards the agent for being far from the origin.
