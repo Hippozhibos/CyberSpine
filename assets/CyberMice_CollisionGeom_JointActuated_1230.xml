@@ -42,7 +42,7 @@
         </default>
 
         <default class="Cervical">
-            <joint group="3" pos="-0.02 0 -0.05" stiffness="2.0" armature="0.001" damping="1.0"/>
+            <joint group="3" pos="-0.02 0 -0.05" stiffness="1.0" armature="0.001" damping="1.0"/>
             <default class="Cervical_x">
                 <joint range="-0.18 0.18"/>
                 <tendon range="-1 1"/>
@@ -222,12 +222,6 @@
                 </body>
             </body>
 
-            <body name="RClavicle" pos="0.021 -0.00 -0.0125" gravcomp="0">
-                <geom name="RClavicle_collision" class="collision_primitive" size="0.0005 0.004" pos="0.003 -0.0035 0.003" euler="1.0 0.5 0" group="1"/>
-                <joint name="RClavicle_r1" pos="0 0 0" axis="1 0 0" range="-0.17453292519943295 0.17453292519943295" group="0" />
-                <joint name="RClavicle_r2" pos="0 0 0" axis="0 0 1" range="-0.17453292519943295 0.17453292519943295" group="0" />
-            </body>
-
             <body name="LScapula" pos="0.0135 0.0 -0.009" gravcomp="0">
                 <geom name="LScapula_collision" class="nonself_collision_primitive" type="ellipsoid" size="0.001 0.0035 0.0065" density="513.564646393" pos="0.005 0.0055 0.004" euler="0 2 -0.9" group="1"/>
                 
@@ -261,12 +255,6 @@
                         </body>
                     </body>
                 </body>
-            </body>
-
-            <body name="LClavicle" pos="0.021 -0.00 -0.0125" gravcomp="0">
-                <geom name="LClavicle_collision" class="collision_primitive" size="0.0005 0.004" pos="0.003 0.0035 0.003" euler="-1.0 0.5 0" group="1"/>
-                <joint name="LClavicle_r1" pos="0 0 0" axis="1 0 0" range="-0.17453292519943295 0.17453292519943295" group="1" />
-                <joint name="LClavicle_r2" pos="0 0 0" axis="0 0 1" range="-0.17453292519943295 0.17453292519943295" group="1" />
             </body>
 
             <body name="L1" pos="0.0 0.00 0.00" gravcomp="0">
@@ -616,93 +604,65 @@
     </tendon>
     
     <actuator>
-        <motor name="T_C7_x" gear="1" joint="T_C7_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C7_C6_y" gear="1" joint="C7_C6_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C6_C5_z" gear="1" joint="C6_C5_z" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C5_C4_x" gear="1" joint="C5_C4_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C4_C3_y" gear="1" joint="C4_C3_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C3_C2_z" gear="1" joint="C3_C2_z" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C2_C1_x" gear="1" joint="C2_C1_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C1_head_y" gear="1" joint="C1_head_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="C1_head_z" gear="1" joint="C1_head_z" ctrllimited="true" ctrlrange="-1 1"/>
 
-        <motor name="RScapula_r1" gear="1" joint="RScapula_r1" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RScapula_r2" gear="1" joint="RScapula_r2" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RScapula_r3" gear="1" joint="RScapula_r3" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RScapula_r4" gear="1" joint="RScapula_r4" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "Cervical_x" forcerange="-20 20" tendon="Cervical_x" dyntype="filter" biastype="affine"/>
+        <general name = "Cervical_y" forcerange="-20 20" tendon="Cervical_y" dyntype="filter" biastype="affine"/>
+        <general name = "Cervical_z" forcerange="-20 20" tendon="Cervical_z" dyntype="filter" biastype="affine"/>
 
-        <motor name="RShoulder_flexion" gear="1" joint="RShoulder_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RShoulder_adduction" gear="1" joint="RShoulder_adduction" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RShoulder_rotation" gear="1" joint="RShoulder_rotation" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RElbow_flexion" gear="1" joint="RElbow_flexion" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "Lumbar_x" forcerange="-20 20" tendon="Lumbar_x" dyntype="filter" biastype="affine"/>
+        <general name = "Lumbar_y" forcerange="-20 20" tendon="Lumbar_y" dyntype="filter" biastype="affine"/>
+        <general name = "Lumbar_z" forcerange="-20 20" tendon="Lumbar_z" dyntype="filter" biastype="affine"/>
 
-        <!-- <motor name="RRadius_rotation" gear="1" joint="RRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/> -->
-        <motor name="RWrist_adduction" gear="1" joint="RWrist_adduction" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RWrist_flexion" gear="1" joint="RWrist_flexion" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "RScapula_r1" forcerange="-0.25 0.25" joint="RScapula_r1" dyntype="filter" biastype="affine" />
+        <general name = "RScapula_r2" forcerange="-0.25 0.25" joint="RScapula_r2" dyntype="filter" biastype="affine" />
+        <general name = "RScapula_r3" forcerange="-0.25 0.25" joint="RScapula_r3" dyntype="filter" biastype="affine" />
+        <general name = "RScapula_r4" forcerange="-0.25 0.25" joint="RScapula_r4" dyntype="filter" biastype="affine" />
 
-        <motor name="RClavicle_r1" gear="1" joint="RClavicle_r1" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RClavicle_r2" gear="1" joint="RClavicle_r2" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "RShoulder_flexion" forcerange="-0.15 0.15" joint="RShoulder_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "RShoulder_adduction" forcerange="-0.15 0.15" joint="RShoulder_adduction" dyntype="filter" biastype="affine"/>
+        <general name = "RShoulder_rotation" forcerange="-0.15 0.15" joint="RShoulder_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "RElbow_flexion" forcerange="-0.15 0.15" joint="RElbow_flexion" dyntype="filter" biastype="affine"/>
 
-        <motor name="LScapula_r1" gear="1" joint="LScapula_r1" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LScapula_r2" gear="1" joint="LScapula_r2" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LScapula_r3" gear="1" joint="LScapula_r3" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LScapula_r4" gear="1" joint="LScapula_r4" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "RWrist_adduction" forcerange="-0.05 0.05" joint="RWrist_adduction" dyntype="filter" biastype="affine" />
+        <general name = "RWrist_flexion" forcerange="-0.05 0.05" joint="RWrist_flexion" dyntype="filter" biastype="affine" />
 
-        <motor name="LShoulder_flexion" gear="1" joint="LShoulder_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LShoulder_adduction" gear="1" joint="LShoulder_adduction" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LShoulder_rotation" gear="1" joint="LShoulder_rotation" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LElbow_flexion" gear="1" joint="LElbow_flexion" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "LScapula_r1" forcerange="-0.25 0.25" joint="LScapula_r1" dyntype="filter" biastype="affine" />
+        <general name = "LScapula_r2" forcerange="-0.25 0.25" joint="LScapula_r2" dyntype="filter" biastype="affine" />
+        <general name = "LScapula_r3" forcerange="-0.25 0.25" joint="LScapula_r3" dyntype="filter" biastype="affine" />
+        <general name = "LScapula_r4" forcerange="-0.25 0.25" joint="LScapula_r4" dyntype="filter" biastype="affine" />
 
-        <!-- <motor name="LRadius_rotation" gear="1" joint="LRadius_rotation" ctrllimited="true" ctrlrange="-1 1"/> -->
-        <motor name="LWrist_adduction" gear="1" joint="LWrist_adduction" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LWrist_flexion" gear="1" joint="LWrist_flexion" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "LShoulder_flexion" forcerange="-0.15 0.15" joint="LShoulder_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "LShoulder_adduction" forcerange="-0.15 0.15" joint="LShoulder_adduction" dyntype="filter" biastype="affine"/>
+        <general name = "LShoulder_rotation" forcerange="-0.15 0.15" joint="LShoulder_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "LElbow_flexion" forcerange="-0.15 0.15" joint="LElbow_flexion" dyntype="filter" biastype="affine"/>
 
-        <motor name="LClavicle_r1" gear="1" joint="LClavicle_r1" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LClavicle_r2" gear="1" joint="LClavicle_r2" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "LWrist_adduction" forcerange="-0.05 0.05" joint="LWrist_adduction" dyntype="filter" biastype="affine" />
+        <general name = "LWrist_flexion" forcerange="-0.05 0.05" joint="LWrist_flexion" dyntype="filter" biastype="affine" />
 
-        <motor name="T_L1_x" gear="1" joint="T_L1_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L1_L2_y" gear="1" joint="L1_L2_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L2_L3_z" gear="1" joint="L2_L3_z" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L3_L4_x" gear="1" joint="L3_L4_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L4_L5_y" gear="1" joint="L4_L5_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L5_L6_z" gear="1" joint="L5_L6_z" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L6_S1_x" gear="1" joint="L6_S1_x" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L6_S1_y" gear="1" joint="L6_S1_y" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="L6_S1_z" gear="1" joint="L6_S1_z" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "RHip_rotation" forcerange="-0.2 0.2" joint="RHip_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "RHip_flexion" forcerange="-0.3 0.3" joint="RHip_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "RHip_adduction" forcerange="-0.2 0.2" joint="RHip_adduction" dyntype="filter" biastype="affine"/>
 
-        <motor name="RHip_rotation" gear="1" joint="RHip_rotation" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RHip_flexion" gear="1" joint="RHip_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RHip_adduction" gear="1" joint="RHip_adduction" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "RKnee_flexion" forcerange="-0.2 0.2" joint="RKnee_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "RAnkle_flexion" forcerange="-0.2 0.2" joint="RAnkle_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "RAnkle_rotation" forcerange="-0.2 0.2" joint="RAnkle_rotation" dyntype="filter" biastype="affine"/>
+        
+        <general name = "LHip_rotation" forcerange="-0.2 0.2" joint="LHip_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "LHip_flexion" forcerange="-0.3 0.3" joint="LHip_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "LHip_adduction" forcerange="-0.2 0.2" joint="LHip_adduction" dyntype="filter" biastype="affine"/>
 
-        <motor name="RKnee_flexion" gear="1" joint="RKnee_flexion" ctrllimited="true" ctrlrange="-1 1"/>
+        <general name = "LKnee_flexion" forcerange="-0.2 0.2" joint="LKnee_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "LAnkle_flexion" forcerange="-0.2 0.2" joint="LAnkle_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "LAnkle_rotation" forcerange="-0.2 0.2" joint="LAnkle_rotation" dyntype="filter" biastype="affine"/>
 
-        <motor name="RAnkle_flexion" gear="1" joint="RAnkle_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="RAnkle_rotation" gear="1" joint="RAnkle_rotation" ctrllimited="true" ctrlrange="-1 1"/>
-
-        <motor name="LHip_rotation" gear="1" joint="LHip_rotation" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LHip_flexion" gear="1" joint="LHip_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LHip_adduction" gear="1" joint="LHip_adduction" ctrllimited="true" ctrlrange="-1 1"/>
-
-        <motor name="LKnee_flexion" gear="1" joint="LKnee_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-
-        <motor name="LAnkle_flexion" gear="1" joint="LAnkle_flexion" ctrllimited="true" ctrlrange="-1 1"/>
-        <motor name="LAnkle_rotation" gear="1" joint="LAnkle_rotation" ctrllimited="true" ctrlrange="-1 1"/>
     </actuator>
 
-    <equality>
-        <weld name="RGlenohumeral Joint" active="true" body1="RScapula" body2="RClavicle" anchor="0.0015 -0.0065 0.0055" torquescale="1" />
-        <weld name="LGlenohumeral Joint" active="true" body1="LScapula" body2="LClavicle" anchor="0.0015 0.0065 0.0055" torquescale="1" />
-    </equality>
 
     <contact>
         <exclude body1="CyberMice" body2="RHumerus" />    
-        <exclude body1="RScapula" body2="RClavicle" />
-        <exclude body1="RHumerus" body2="RClavicle" />
         <exclude body1="RHumerus" body2="RRadius" />
         <exclude body1="RUlna" body2="RCarpi" />
         <exclude body1="CyberMice" body2="LHumerus" />
-        <exclude body1="LScapula" body2="LClavicle" />
-        <exclude body1="LHumerus" body2="LClavicle" />
         <exclude body1="LHumerus" body2="LRadius" />
         <exclude body1="LUlna" body2="LCarpi" />
 
