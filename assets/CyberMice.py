@@ -12,19 +12,15 @@ from dm_control.mujoco import wrapper as mj_wrapper
 import numpy as np
 
 _XML_PATH = os.path.join(os.path.dirname(__file__),
-                         'CyberMice_CollisionGeom_JointActuated.xml')
+                         'CyberMice_CollisionGeom_JointActuated_1230.xml')
 
 _MICE_MOCAP_JOINTS = [
     'RScapula_r1', 'RScapula_r2', 'RScapula_r3', 'RScapula_r4',
     'RShoulder_flexion','RShoulder_adduction', 'RShoulder_rotation', 
-    'RElbow_flexion',
-    'RRadius_rotation', 'RWrist_adduction', 'RWrist_flexion', 
-    'RClavicle_r1', 'RClavicle_r2',
+    'RElbow_flexion', 'RWrist_adduction', 'RWrist_flexion', 
     'LScapula_r1', 'LScapula_r2', 'LScapula_r3', 'LScapula_r4',
     'LShoulder_flexion','LShoulder_adduction', 'LShoulder_rotation', 
-    'LElbow_flexion',
-    'LRadius_rotation', 'LWrist_adduction', 'LWrist_flexion', 
-    'LClavicle_r1', 'LClavicle_r2',
+    'LElbow_flexion', 'LWrist_adduction', 'LWrist_flexion', 
     'RHip_rotation','RHip_flexion','RHip_adduction', 
     'RKnee_flexion', 'RAnkle_flexion', 'RAnkle_rotation',
     'LHip_rotation','LHip_flexion','LHip_adduction', 

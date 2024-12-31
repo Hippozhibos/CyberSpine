@@ -24,18 +24,18 @@
         </default>
 
         <default class="Lumbar">
-            <joint group="3" pos="0.003 0 -0.003" armature="1e-05" damping="0.03"/>
+            <joint group="3" pos="0.003 0 -0.003" stiffness="0.1" armature="1e-05" damping="1.0"/>
             <general gainprm="0.15"/>
             <default class="Lumbar_x">
-                <joint stiffness="0.03" range="-0.25 0.25"/>
+                <joint range="-0.25 0.25"/>
                 <tendon range="-1 1"/>
             </default>
             <default class="Lumbar_y">
-                <joint stiffness="0.03" range="-0.25 0.25"/>
+                <joint range="-0.25 0.25"/>
                 <tendon range="-1 1"/>
             </default>
             <default class="Lumbar_z">
-                <joint stiffness="0.02" range="-0.25 0.25"/>
+                <joint range="-0.25 0.25"/>
                 <tendon range="-1 1"/>
                 <general gainprm="0.4"/>
             </default>
@@ -107,7 +107,7 @@
 
             <light name="top" mode="trackcom" exponent="10" cutoff="45" ambient="0 0 0" pos="0 0 5" directional="false" />
             
-            <!-- <freejoint name="free"/> -->
+            <freejoint name="free"/>
             <!-- <joint name="root_x" type="slide" pos="0 0 0" axis="1 0 0" limited="false" stiffness="0" group="0" />
             <joint name="root_y" type="slide" pos="0 0 0" axis="0 1 0" limited="false" stiffness="0" group="0" />
             <joint name="root_z" type="slide" pos="0 0 0" axis="0 0 1" limited="false" stiffness="0" group="0" />
@@ -537,9 +537,9 @@
         </fixed>
 
         <fixed name="Lumbar_z" class="Lumbar_z">
-            <joint joint="L2_L3_z" coef="0.142"/>
-            <joint joint="L5_L6_z" coef="0.142"/>
-            <joint joint="L6_S1_z" coef="0.148"/>
+            <joint joint="L2_L3_z" coef="0.334"/>
+            <joint joint="L5_L6_z" coef="0.332"/>
+            <joint joint="L6_S1_z" coef="0.334"/>
         </fixed>
 
         <!-- <fixed name="Caudal_y" class="Caudal_y">
@@ -609,51 +609,51 @@
         <general name = "Cervical_y" forcerange="-20 20" tendon="Cervical_y" dyntype="filter" biastype="affine"/>
         <general name = "Cervical_z" forcerange="-20 20" tendon="Cervical_z" dyntype="filter" biastype="affine"/>
 
-        <general name = "Lumbar_x" forcerange="-20 20" tendon="Lumbar_x" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "Lumbar_x" forcerange="-20 20" tendon="Lumbar_x" dyntype="filter" biastype="affine"/>
         <general name = "Lumbar_y" forcerange="-20 20" tendon="Lumbar_y" dyntype="filter" biastype="affine"/>
-        <general name = "Lumbar_z" forcerange="-20 20" tendon="Lumbar_z" dyntype="filter" biastype="affine"/>
+        <general name = "Lumbar_z" forcerange="-20 20" tendon="Lumbar_z" dyntype="filter" biastype="affine"/> -->
 
-        <general name = "RScapula_r1" forcerange="-0.25 0.25" joint="RScapula_r1" dyntype="filter" biastype="affine" />
+        <!-- <general name = "RScapula_r1" forcerange="-0.25 0.25" joint="RScapula_r1" dyntype="filter" biastype="affine" />
         <general name = "RScapula_r2" forcerange="-0.25 0.25" joint="RScapula_r2" dyntype="filter" biastype="affine" />
         <general name = "RScapula_r3" forcerange="-0.25 0.25" joint="RScapula_r3" dyntype="filter" biastype="affine" />
-        <general name = "RScapula_r4" forcerange="-0.25 0.25" joint="RScapula_r4" dyntype="filter" biastype="affine" />
+        <general name = "RScapula_r4" forcerange="-0.25 0.25" joint="RScapula_r4" dyntype="filter" biastype="affine" /> -->
 
-        <general name = "RShoulder_flexion" forcerange="-0.15 0.15" joint="RShoulder_flexion" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "RShoulder_flexion" forcerange="-0.15 0.15" joint="RShoulder_flexion" dyntype="filter" biastype="affine"/>
         <general name = "RShoulder_adduction" forcerange="-0.15 0.15" joint="RShoulder_adduction" dyntype="filter" biastype="affine"/>
         <general name = "RShoulder_rotation" forcerange="-0.15 0.15" joint="RShoulder_rotation" dyntype="filter" biastype="affine"/>
-        <general name = "RElbow_flexion" forcerange="-0.15 0.15" joint="RElbow_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "RElbow_flexion" forcerange="-0.15 0.15" joint="RElbow_flexion" dyntype="filter" biastype="affine"/> -->
 
-        <general name = "RWrist_adduction" forcerange="-0.05 0.05" joint="RWrist_adduction" dyntype="filter" biastype="affine" />
-        <general name = "RWrist_flexion" forcerange="-0.05 0.05" joint="RWrist_flexion" dyntype="filter" biastype="affine" />
+        <!-- <general name = "RWrist_adduction" forcerange="-0.05 0.05" joint="RWrist_adduction" dyntype="filter" biastype="affine" />
+        <general name = "RWrist_flexion" forcerange="-0.05 0.05" joint="RWrist_flexion" dyntype="filter" biastype="affine" /> -->
 
-        <general name = "LScapula_r1" forcerange="-0.25 0.25" joint="LScapula_r1" dyntype="filter" biastype="affine" />
+        <!-- <general name = "LScapula_r1" forcerange="-0.25 0.25" joint="LScapula_r1" dyntype="filter" biastype="affine" />
         <general name = "LScapula_r2" forcerange="-0.25 0.25" joint="LScapula_r2" dyntype="filter" biastype="affine" />
         <general name = "LScapula_r3" forcerange="-0.25 0.25" joint="LScapula_r3" dyntype="filter" biastype="affine" />
-        <general name = "LScapula_r4" forcerange="-0.25 0.25" joint="LScapula_r4" dyntype="filter" biastype="affine" />
+        <general name = "LScapula_r4" forcerange="-0.25 0.25" joint="LScapula_r4" dyntype="filter" biastype="affine" /> -->
 
-        <general name = "LShoulder_flexion" forcerange="-0.15 0.15" joint="LShoulder_flexion" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "LShoulder_flexion" forcerange="-0.15 0.15" joint="LShoulder_flexion" dyntype="filter" biastype="affine"/>
         <general name = "LShoulder_adduction" forcerange="-0.15 0.15" joint="LShoulder_adduction" dyntype="filter" biastype="affine"/>
         <general name = "LShoulder_rotation" forcerange="-0.15 0.15" joint="LShoulder_rotation" dyntype="filter" biastype="affine"/>
-        <general name = "LElbow_flexion" forcerange="-0.15 0.15" joint="LElbow_flexion" dyntype="filter" biastype="affine"/>
+        <general name = "LElbow_flexion" forcerange="-0.15 0.15" joint="LElbow_flexion" dyntype="filter" biastype="affine"/> -->
 
-        <general name = "LWrist_adduction" forcerange="-0.05 0.05" joint="LWrist_adduction" dyntype="filter" biastype="affine" />
-        <general name = "LWrist_flexion" forcerange="-0.05 0.05" joint="LWrist_flexion" dyntype="filter" biastype="affine" />
+        <!-- <general name = "LWrist_adduction" forcerange="-0.05 0.05" joint="LWrist_adduction" dyntype="filter" biastype="affine" />
+        <general name = "LWrist_flexion" forcerange="-0.05 0.05" joint="LWrist_flexion" dyntype="filter" biastype="affine" /> -->
 
-        <general name = "RHip_rotation" forcerange="-0.2 0.2" joint="RHip_rotation" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "RHip_rotation" forcerange="-0.2 0.2" joint="RHip_rotation" dyntype="filter" biastype="affine"/>
         <general name = "RHip_flexion" forcerange="-0.3 0.3" joint="RHip_flexion" dyntype="filter" biastype="affine"/>
-        <general name = "RHip_adduction" forcerange="-0.2 0.2" joint="RHip_adduction" dyntype="filter" biastype="affine"/>
+        <general name = "RHip_adduction" forcerange="-0.2 0.2" joint="RHip_adduction" dyntype="filter" biastype="affine"/> -->
 
-        <general name = "RKnee_flexion" forcerange="-0.2 0.2" joint="RKnee_flexion" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "RKnee_flexion" forcerange="-0.2 0.2" joint="RKnee_flexion" dyntype="filter" biastype="affine"/>
         <general name = "RAnkle_flexion" forcerange="-0.2 0.2" joint="RAnkle_flexion" dyntype="filter" biastype="affine"/>
-        <general name = "RAnkle_rotation" forcerange="-0.2 0.2" joint="RAnkle_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "RAnkle_rotation" forcerange="-0.2 0.2" joint="RAnkle_rotation" dyntype="filter" biastype="affine"/> -->
         
-        <general name = "LHip_rotation" forcerange="-0.2 0.2" joint="LHip_rotation" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "LHip_rotation" forcerange="-0.2 0.2" joint="LHip_rotation" dyntype="filter" biastype="affine"/>
         <general name = "LHip_flexion" forcerange="-0.3 0.3" joint="LHip_flexion" dyntype="filter" biastype="affine"/>
-        <general name = "LHip_adduction" forcerange="-0.2 0.2" joint="LHip_adduction" dyntype="filter" biastype="affine"/>
+        <general name = "LHip_adduction" forcerange="-0.2 0.2" joint="LHip_adduction" dyntype="filter" biastype="affine"/> -->
 
-        <general name = "LKnee_flexion" forcerange="-0.2 0.2" joint="LKnee_flexion" dyntype="filter" biastype="affine"/>
+        <!-- <general name = "LKnee_flexion" forcerange="-0.2 0.2" joint="LKnee_flexion" dyntype="filter" biastype="affine"/>
         <general name = "LAnkle_flexion" forcerange="-0.2 0.2" joint="LAnkle_flexion" dyntype="filter" biastype="affine"/>
-        <general name = "LAnkle_rotation" forcerange="-0.2 0.2" joint="LAnkle_rotation" dyntype="filter" biastype="affine"/>
+        <general name = "LAnkle_rotation" forcerange="-0.2 0.2" joint="LAnkle_rotation" dyntype="filter" biastype="affine"/> -->
 
     </actuator>
 

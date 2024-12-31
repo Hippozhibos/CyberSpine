@@ -226,4 +226,8 @@
 - 检查mice model和rat model的xml文件设置，重点：
   - body的拓扑关系：body 拓扑关系一致, 但mice多了两块clavicle。
   - 关节的运动范围：
-  - 关节电机的扭矩设置；
+  - 关节电机的扭矩设置；将actuator 从 motor 改为 general, 使与rodent一样。
+
+### 2024-12-30
+- 对小鼠模型的过大修改，仍然会遇到mujoco的报错，暂时毫无头绪具体是哪里的问题。
+- 转换思路，也许应该先摸索dreamer架构的修改方式，不要纠结于小鼠模型？
